@@ -647,6 +647,13 @@ async function init() {
   const dbCount = document.querySelector("#db-count");
   if (dbCount) dbCount.textContent = ships.length;
 
+  // lien Google SearchAction / partage : ?q=Cutlass
+  const urlQ = new URLSearchParams(location.search).get("q");
+  if (urlQ) {
+    queryInput.value = urlQ;
+    syncQueryClear();
+  }
+
   // afficher une première sélection sans attendre un clic
   hasSearched = true;
   render();

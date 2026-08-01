@@ -1128,6 +1128,36 @@ html.gate-locked body {
   box-shadow: 1px 1px 0 var(--ink);
 }
 
+/* ---------- Guide SEO (contenu crawlable) ---------- */
+
+.seo-guide {
+  margin: clamp(2rem, 4vw, 3rem) 0 0.5rem;
+  max-width: 44rem;
+  padding: 1.4rem 0 0;
+  border-top: 3px solid var(--rule);
+}
+
+.seo-guide h2 {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.seo-guide p {
+  margin: 0 0 0.75rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.seo-guide p:last-child {
+  margin-bottom: 0;
+}
+
 /* ---------- Pages légales ---------- */
 
 .legal {

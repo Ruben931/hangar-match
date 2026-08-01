@@ -6,11 +6,42 @@
      crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hangar Match — Le comparateur d'occasions du 'verse</title>
+    <title>Hangar Match — Comparateur de vaisseaux Star Citizen : prix aUEC, achat et location</title>
     <meta
       name="description"
-      content="Le catalogue d'occasions du spatioport : budget aUEC + programme de vol, et tu repars avec la liste des vaisseaux Star Citizen qui collent, prix et adresses des revendeurs."
+      content="Trouve le meilleur vaisseau Star Citizen pour ton budget : 252 vaisseaux comparés, prix en aUEC, lieux d'achat et de location à Stanton, Pyro et Nyx. Gratuit et sans compte."
     />
+    <meta
+      name="keywords"
+      content="Star Citizen, vaisseau Star Citizen, meilleur vaisseau Star Citizen, prix aUEC, acheter vaisseau Star Citizen, louer vaisseau, New Deal, Astro Armada, Stanton, Pyro, comparateur vaisseaux"
+    />
+    <link rel="canonical" href="https://hangarmatch.org/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Hangar Match" />
+    <meta name="theme-color" content="#f1ebdd" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hangar Match" />
+    <meta property="og:url" content="https://hangarmatch.org/" />
+    <meta
+      property="og:title"
+      content="Hangar Match — Comparateur de vaisseaux Star Citizen"
+    />
+    <meta
+      property="og:description"
+      content="Ton budget en aUEC, ton programme de vol, et la liste des vaisseaux Star Citizen qui collent — avec les prix et l'adresse des revendeurs."
+    />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Hangar Match — Comparateur de vaisseaux Star Citizen"
+    />
+    <meta
+      name="twitter:description"
+      content="252 vaisseaux comparés : prix aUEC, achat et location à Stanton, Pyro et Nyx."
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,6 +49,54 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/src/styles.css" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://hangarmatch.org/#website",
+            "url": "https://hangarmatch.org/",
+            "name": "Hangar Match",
+            "description": "Comparateur de vaisseaux Star Citizen : prix aUEC, achat et location.",
+            "inLanguage": ["fr", "en", "de", "es", "it", "pt", "pl"],
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://hangarmatch.org/?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "name": "Hangar Match",
+            "url": "https://hangarmatch.org/",
+            "applicationCategory": "GameApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "JavaScript",
+            "description": "Comparateur gratuit de vaisseaux Star Citizen. Filtre 252 vaisseaux par budget en aUEC, activité, système et gabarit, puis affiche les prix et les lieux d'achat ou de location.",
+            "inLanguage": "fr",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            },
+            "about": {
+              "@type": "VideoGame",
+              "name": "Star Citizen",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Cloud Imperium Games"
+              }
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div class="ticker" aria-hidden="true">
@@ -225,6 +304,23 @@
           <span class="promo-placeholder">728 × 90 — bandeau bas</span>
         </div>
       </aside>
+
+      <section class="seo-guide" id="guide">
+        <h2>Comment trouver le meilleur vaisseau Star Citizen</h2>
+        <p>
+          Hangar Match compare plus de 250 vaisseaux et véhicules Star Citizen
+          selon ton budget en aUEC. Indique ce que tu veux faire — cargo, combat,
+          mining, exploration, salvage — et le registre liste les appareils
+          compatibles avec leur prix d'achat, leur tarif de location à la journée,
+          leur gabarit et le revendeur (New Deal, Astro Armada, Teach's Ship Shop,
+          Buy &amp; Fly…).
+        </p>
+        <p>
+          Filtre par système solaire (Stanton, Pyro, Nyx), par domaine aérien ou
+          terrestre, et par mode achat ou location. Idéal pour choisir un starter,
+          un cargo économique ou un chasseur sans passer des heures sur le wiki.
+        </p>
+      </section>
     </main>
 
     <footer class="site-footer shell">
