@@ -4,6 +4,12 @@
  */
 
 export function detectAdBlock() {
+  // ne pas bloquer les robots Google (AdSense / Search)
+  const ua = navigator.userAgent || "";
+  if (/Googlebot|Mediapartners-Google|AdsBot-Google|Google-InspectionTool/i.test(ua)) {
+    return Promise.resolve(false);
+  }
+
   return new Promise((resolve) => {
     const bait = document.createElement("div");
     bait.id = "ad-banner";
