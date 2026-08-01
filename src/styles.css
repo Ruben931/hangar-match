@@ -1128,6 +1128,60 @@ html.gate-locked body {
   box-shadow: 1px 1px 0 var(--ink);
 }
 
+/* ---------- Pages légales ---------- */
+
+.legal {
+  max-width: 46rem;
+  padding-bottom: 3rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.legal h2 {
+  margin: 2.2rem 0 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-bottom: 3px solid var(--rule);
+  padding-bottom: 0.3rem;
+}
+
+.legal p {
+  margin: 0 0 0.9rem;
+  color: var(--ink-soft);
+}
+
+.legal b {
+  color: var(--ink);
+}
+
+.legal-back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.legal-back a {
+  border-bottom: 2px solid var(--red);
+  text-decoration: none;
+}
+
+.footer-links {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-links a {
+  text-decoration: none;
+  border-bottom: 2px solid var(--red);
+}
+
 /* ---------- Footer ---------- */
 
 .site-footer {

@@ -137,6 +137,8 @@ export const TRANSLATIONS = {
     gateBody:
       "Hangar Match est gratuit grâce à la publicité. Désactive ton bloqueur de pubs (uBlock, AdBlock, etc.) pour ce site, puis clique sur Réessayer.",
     gateRetry: "Réessayer",
+    linkLegal: "Mentions légales",
+    linkPrivacy: "Confidentialité",
   },
 
   en: {
@@ -249,6 +251,8 @@ export const TRANSLATIONS = {
     gateBody:
       "Hangar Match is free thanks to advertising. Please disable your ad blocker (uBlock, AdBlock, etc.) for this site, then click Try again.",
     gateRetry: "Try again",
+    linkLegal: "Legal notice",
+    linkPrivacy: "Privacy",
   },
 
   de: {
@@ -361,6 +365,8 @@ export const TRANSLATIONS = {
     gateBody:
       "Hangar Match ist dank Werbung kostenlos. Bitte deaktiviere deinen Werbeblocker (uBlock, AdBlock usw.) für diese Seite und klicke auf Erneut versuchen.",
     gateRetry: "Erneut versuchen",
+    linkLegal: "Impressum",
+    linkPrivacy: "Datenschutz",
   },
 
   es: {
@@ -473,6 +479,8 @@ export const TRANSLATIONS = {
     gateBody:
       "Hangar Match es gratis gracias a la publicidad. Desactiva tu bloqueador (uBlock, AdBlock, etc.) en este sitio y pulsa Reintentar.",
     gateRetry: "Reintentar",
+    linkLegal: "Aviso legal",
+    linkPrivacy: "Privacidad",
   },
 
   it: {
@@ -585,6 +593,8 @@ export const TRANSLATIONS = {
     gateBody:
       "Hangar Match è gratis grazie alla pubblicità. Disattiva il blocco annunci (uBlock, AdBlock, ecc.) per questo sito, poi clicca Riprova.",
     gateRetry: "Riprova",
+    linkLegal: "Note legali",
+    linkPrivacy: "Privacy",
   },
 
   pt: {
@@ -697,6 +707,8 @@ export const TRANSLATIONS = {
     gateBody:
       "Hangar Match é gratuito graças à publicidade. Desative o bloqueador (uBlock, AdBlock, etc.) neste site e clique em Tentar de novo.",
     gateRetry: "Tentar de novo",
+    linkLegal: "Aviso legal",
+    linkPrivacy: "Privacidade",
   },
 
   pl: {
@@ -809,6 +821,8 @@ export const TRANSLATIONS = {
     gateBody:
       "Hangar Match jest darmowy dzięki reklamom. Wyłącz bloker (uBlock, AdBlock itd.) dla tej strony, a potem kliknij Spróbuj ponownie.",
     gateRetry: "Spróbuj ponownie",
+    linkLegal: "Nota prawna",
+    linkPrivacy: "Prywatność",
   },
 };
 

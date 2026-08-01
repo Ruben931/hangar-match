@@ -580,7 +580,9 @@ function applyI18n() {
   setHtml('[data-slot="sky-right"] .promo-placeholder', "adSky");
 
   // pied de page + sélecteur de langue
-  setHtml(".site-footer p", "footer");
+  setHtml(".site-footer p:not(.footer-links)", "footer");
+  setText("#link-legal", "linkLegal");
+  setText("#link-privacy", "linkPrivacy");
   const langLabel = document.querySelector('label[for="lang"]');
   if (langLabel) langLabel.textContent = t("langLabel");
 
@@ -593,7 +595,12 @@ function applyI18n() {
   }
 }
 
+// Remettre à true une fois le site approuvé par AdSense : tant que Google
+// examine le site, un mur bloquant l'empêcherait de voir le contenu.
+const GATE_ENABLED = false;
+
 async function enforceAdGate() {
+  if (!GATE_ENABLED) return false;
   const blocked = await detectAdBlock();
   if (!blocked) {
     hideGate();
@@ -639,6 +646,10 @@ async function init() {
 
   const dbCount = document.querySelector("#db-count");
   if (dbCount) dbCount.textContent = ships.length;
+
+  // afficher une première sélection sans attendre un clic
+  hasSearched = true;
+  render();
 
   budgetInput.addEventListener("input", () => syncBudget(false));
   budgetRange.addEventListener("input", () => syncBudget(true));
