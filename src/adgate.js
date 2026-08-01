@@ -11,10 +11,12 @@ export function detectAdBlock() {
   }
 
   return new Promise((resolve) => {
+    // pas de classe/élément AdSense ici : un faux <ins class="adsbygoogle">
+    // serait vu comme une unité publicitaire invalide par Google.
     const bait = document.createElement("div");
     bait.id = "ad-banner";
     bait.className =
-      "adsbox ad-banner adsbygoogle pub_300x250 text-ad textAd banner-ad ad-unit ad-placement";
+      "adsbox ad-banner pub_300x250 text-ad textAd banner-ad ad-unit ad-placement";
     bait.setAttribute("aria-hidden", "true");
     bait.innerHTML = "&nbsp;";
     Object.assign(bait.style, {
@@ -27,13 +29,6 @@ export function detectAdBlock() {
       zIndex: "-1",
     });
     document.body.appendChild(bait);
-
-    const ins = document.createElement("ins");
-    ins.className = "adsbygoogle";
-    ins.style.display = "block";
-    ins.style.width = "1px";
-    ins.style.height = "1px";
-    bait.appendChild(ins);
 
     // laisser le temps aux filtres cosmétiques d'agir
     requestAnimationFrame(() => {
