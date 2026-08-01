@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hangar Match — Le comparateur d'occasions du 'verse</title>
+    <meta
+      name="description"
+      content="Le catalogue d'occasions du spatioport : budget aUEC + programme de vol, et tu repars avec la liste des vaisseaux Star Citizen qui collent, prix et adresses des revendeurs."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Comparateur de vaisseaux</span><i>✦</i>
+        <span>Système Stanton</span><i>✦</i>
+        <span>Prix aUEC vérifiés Alpha 4.9</span><i>✦</i>
+        <span>Achat &amp; location</span><i>✦</i>
+        <span>Aucune commission</span><i>✦</i>
+        <span>Comparateur de vaisseaux</span><i>✦</i>
+        <span>Système Stanton</span><i>✦</i>
+        <span>Prix aUEC vérifiés Alpha 4.9</span><i>✦</i>
+        <span>Achat &amp; location</span><i>✦</i>
+        <span>Aucune commission</span><i>✦</i>
+      </div>
+    </div>
+
+    <aside class="ad-rail ad-rail--left" aria-label="Espace publicitaire">
+      <span class="ad-label">Publicité</span>
+      <div class="ad-frame ad-frame--sky" data-ad="sky-left">
+        <span class="ad-placeholder">160 × 600<br />skyscraper</span>
+      </div>
+    </aside>
+
+    <aside class="ad-rail ad-rail--right" aria-label="Espace publicitaire">
+      <span class="ad-label">Publicité</span>
+      <div class="ad-frame ad-frame--sky" data-ad="sky-right">
+        <span class="ad-placeholder">160 × 600<br />skyscraper</span>
+      </div>
+    </aside>
+
+    <header class="masthead shell">
+      <div class="masthead-top">
+        <span id="mast-place">Spatioport de Lorville — Hall 4</span>
+        <span id="registry-line">Registre : <b id="db-count">—</b> appareils</span>
+        <span id="mast-edition">Édition 2956</span>
+        <span class="lang-pick">
+          <label class="sr-only" for="lang">Langue</label>
+          <select id="lang"></select>
+        </span>
+      </div>
+      <h1 class="masthead-title">Hangar Match<span class="ast">*</span></h1>
+      <p class="lede">
+        <span class="ast">*</span>Le comparateur d'occasions du 'verse. Ton budget,
+        ton programme de vol — on te sort les appareils qui collent, avec les prix
+        aUEC et l'adresse des revendeurs. Sans commission, sans baratin.
+      </p>
+      <span class="badge-edition" aria-hidden="true">Alpha<br />4.9</span>
+    </header>
+
+    <main class="shell">
+      <aside class="ad-slot ad-slot--leader" aria-label="Espace publicitaire">
+        <span class="ad-label">Publicité</span>
+        <div class="ad-frame ad-frame--leader" data-ad="leaderboard">
+          <span class="ad-placeholder">728 × 90 — bandeau</span>
+        </div>
+      </aside>
+
+      <form class="order-form" id="finder-form">
+        <div class="form-head">
+          <span>Bon de recherche</span>
+          <span>Formulaire H-M / 04</span>
+        </div>
+
+        <div class="form-inner">
+          <div class="query-block">
+            <label for="query">01 — Rechercher un vaisseau</label>
+            <div class="query-line">
+              <input
+                id="query"
+                name="query"
+                type="search"
+                placeholder="Cutlass Black, Aurora, Drake, Hornet…"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button type="button" class="query-clear" id="query-clear" hidden aria-label="Effacer la recherche">
+                ×
+              </button>
+            </div>
+            <p class="query-hint">
+              Tape un nom ou un constructeur. La recherche ignore le budget et les activités.
+            </p>
+          </div>
+
+          <div class="budget-block">
+            <label for="budget">02 — Budget alloué</label>
+            <div class="budget-line">
+              <input
+                id="budget"
+                name="budget"
+                type="number"
+                min="0"
+                step="10000"
+                value="2000000"
+                inputmode="numeric"
+                required
+              />
+              <span class="unit">aUEC</span>
+            </div>
+            <input
+              id="budget-range"
+              type="range"
+              min="100000"
+              max="70000000"
+              step="100000"
+              value="2000000"
+              aria-label="Curseur budget"
+            />
+            <div class="scale" aria-hidden="true">
+              <span>100 K</span><span>10 M</span><span>35 M</span><span>70 M</span>
+            </div>
+          </div>
+
+          <div class="finder-grid">
+            <div class="field">
+              <label for="starsystem">03 — Système</label>
+              <select id="starsystem" name="starsystem">
+                <option value="all" selected>Tous les systèmes</option>
+                <option value="stanton">Stanton</option>
+                <option value="pyro">Pyro</option>
+                <option value="nyx">Nyx (Levski)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="catalog">04 — Catalogue</label>
+              <select id="catalog" name="catalog">
+                <option value="ingame" selected>Achetables aUEC</option>
+                <option value="flight">Tous flight-ready</option>
+                <option value="all">Toute la matrix RSI</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="domain">05 — Domaine</label>
+              <select id="domain" name="domain">
+                <option value="both" selected>Terrestre + aérien</option>
+                <option value="air">Aérien seulement</option>
+                <option value="ground">Terrestre seulement</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="size">06 — Gabarit</label>
+              <select id="size" name="size">
+                <option value="any">Tous</option>
+                <option value="small">Small / Snub</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="capital">Capital</option>
+                <option value="ground">Ground</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="acquire">07 — Mode</label>
+              <select id="acquire" name="acquire">
+                <option value="buy" selected>Achat</option>
+                <option value="rent">Location</option>
+                <option value="both">Achat + location</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="sort">08 — Tri</label>
+              <select id="sort" name="sort">
+                <option value="match">Compatibilité</option>
+                <option value="price-asc">Prix croissant</option>
+                <option value="price-desc">Prix décroissant</option>
+                <option value="cargo">Soute (SCU)</option>
+              </select>
+            </div>
+          </div>
+
+          <fieldset class="roles">
+            <legend>09 — Programme de vol</legend>
+            <div class="role-grid" id="role-grid"></div>
+          </fieldset>
+
+          <div class="form-actions">
+            <p class="hint">
+              Le budget filtre les prix <b>aUEC</b> uniquement. Pour les appareils
+              hors vente in-game, passe le catalogue sur <b>Toute la matrix RSI</b>.
+            </p>
+            <button type="submit" class="search-btn">Consulter le registre</button>
+          </div>
+        </div>
+      </form>
+
+      <section class="results-wrap" aria-live="polite">
+        <div class="results-head">
+          <h2>Les annonces</h2>
+          <p id="results-count" class="results-count"></p>
+        </div>
+        <div id="results" class="results">
+          <p class="empty-start">
+            Remplis le bon de recherche ci-dessus, puis consulte le registre.
+          </p>
+        </div>
+      </section>
+      <aside class="ad-slot ad-slot--footer" aria-label="Espace publicitaire">
+        <span class="ad-label">Publicité</span>
+        <div class="ad-frame ad-frame--leader" data-ad="footer">
+          <span class="ad-placeholder">728 × 90 — bandeau bas</span>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="site-footer shell">
+      <p>
+        Registre : Ship Matrix RSI · prix aUEC par concession —
+        <a href="https://starcitizen.tools/Purchasing_ships" target="_blank" rel="noopener">wiki starcitizen.tools</a>
+        (pages Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly — Alpha 4.8).
+        Projet de fan, non affilié à Cloud Imperium Games. Les vaisseaux vendus ne sont ni repris ni échangés.
+      </p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
