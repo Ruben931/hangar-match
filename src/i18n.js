@@ -133,6 +133,10 @@ export const TRANSLATIONS = {
     footer:
       "Registre : Ship Matrix RSI · prix aUEC par concession — <a href=\"https://starcitizen.tools/Purchasing_ships\" target=\"_blank\" rel=\"noopener\">wiki starcitizen.tools</a> (pages Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly — Alpha 4.8). Projet de fan, non affilié à Cloud Imperium Games. Les vaisseaux vendus ne sont ni repris ni échangés.",
     langLabel: "Langue",
+    gateTitle: "Bloqueur de publicités détecté",
+    gateBody:
+      "Hangar Match est gratuit grâce à la publicité. Désactive ton bloqueur de pubs (uBlock, AdBlock, etc.) pour ce site, puis clique sur Réessayer.",
+    gateRetry: "Réessayer",
   },
 
   en: {
@@ -241,6 +245,10 @@ export const TRANSLATIONS = {
     footer:
       "Registry: RSI Ship Matrix · aUEC prices per dealership — <a href=\"https://starcitizen.tools/Purchasing_ships\" target=\"_blank\" rel=\"noopener\">starcitizen.tools wiki</a> (Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly pages — Alpha 4.8). Fan project, not affiliated with Cloud Imperium Games. Sold ships can neither be returned nor exchanged.",
     langLabel: "Language",
+    gateTitle: "Ad blocker detected",
+    gateBody:
+      "Hangar Match is free thanks to advertising. Please disable your ad blocker (uBlock, AdBlock, etc.) for this site, then click Try again.",
+    gateRetry: "Try again",
   },
 
   de: {
@@ -349,6 +357,10 @@ export const TRANSLATIONS = {
     footer:
       "Register: RSI Ship Matrix · aUEC-Preise je Händler — <a href=\"https://starcitizen.tools/Purchasing_ships\" target=\"_blank\" rel=\"noopener\">starcitizen.tools-Wiki</a> (Seiten Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly — Alpha 4.8). Fanprojekt, nicht mit Cloud Imperium Games verbunden. Verkaufte Schiffe werden weder zurückgenommen noch getauscht.",
     langLabel: "Sprache",
+    gateTitle: "Werbeblocker erkannt",
+    gateBody:
+      "Hangar Match ist dank Werbung kostenlos. Bitte deaktiviere deinen Werbeblocker (uBlock, AdBlock usw.) für diese Seite und klicke auf Erneut versuchen.",
+    gateRetry: "Erneut versuchen",
   },
 
   es: {
@@ -457,6 +469,10 @@ export const TRANSLATIONS = {
     footer:
       "Registro: RSI Ship Matrix · precios aUEC por concesionario — <a href=\"https://starcitizen.tools/Purchasing_ships\" target=\"_blank\" rel=\"noopener\">wiki starcitizen.tools</a> (páginas Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly — Alpha 4.8). Proyecto de fans, no afiliado a Cloud Imperium Games. Las naves vendidas no se devuelven ni se cambian.",
     langLabel: "Idioma",
+    gateTitle: "Bloqueador de anuncios detectado",
+    gateBody:
+      "Hangar Match es gratis gracias a la publicidad. Desactiva tu bloqueador (uBlock, AdBlock, etc.) en este sitio y pulsa Reintentar.",
+    gateRetry: "Reintentar",
   },
 
   it: {
@@ -565,6 +581,10 @@ export const TRANSLATIONS = {
     footer:
       "Registro: RSI Ship Matrix · prezzi aUEC per concessionario — <a href=\"https://starcitizen.tools/Purchasing_ships\" target=\"_blank\" rel=\"noopener\">wiki starcitizen.tools</a> (pagine Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly — Alpha 4.8). Progetto amatoriale, non affiliato a Cloud Imperium Games. Le navi vendute non si accettano resi né cambi.",
     langLabel: "Lingua",
+    gateTitle: "Blocco annunci rilevato",
+    gateBody:
+      "Hangar Match è gratis grazie alla pubblicità. Disattiva il blocco annunci (uBlock, AdBlock, ecc.) per questo sito, poi clicca Riprova.",
+    gateRetry: "Riprova",
   },
 
   pt: {
@@ -673,6 +693,10 @@ export const TRANSLATIONS = {
     footer:
       "Registro: RSI Ship Matrix · preços aUEC por concessionária — <a href=\"https://starcitizen.tools/Purchasing_ships\" target=\"_blank\" rel=\"noopener\">wiki starcitizen.tools</a> (páginas Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly — Alpha 4.8). Projeto de fã, não afiliado à Cloud Imperium Games. Naves vendidas não são devolvidas nem trocadas.",
     langLabel: "Idioma",
+    gateTitle: "Bloqueador de anúncios detectado",
+    gateBody:
+      "Hangar Match é gratuito graças à publicidade. Desative o bloqueador (uBlock, AdBlock, etc.) neste site e clique em Tentar de novo.",
+    gateRetry: "Tentar de novo",
   },
 
   pl: {
@@ -781,6 +805,10 @@ export const TRANSLATIONS = {
     footer:
       "Rejestr: RSI Ship Matrix · ceny aUEC wg dealera — <a href=\"https://starcitizen.tools/Purchasing_ships\" target=\"_blank\" rel=\"noopener\">wiki starcitizen.tools</a> (strony Astro Armada, New Deal, Crusader Showroom, Teach's, Buy &amp; Fly — Alpha 4.8). Projekt fanowski, niezwiązany z Cloud Imperium Games. Sprzedanych statków nie przyjmujemy z powrotem ani nie wymieniamy.",
     langLabel: "Język",
+    gateTitle: "Wykryto bloker reklam",
+    gateBody:
+      "Hangar Match jest darmowy dzięki reklamom. Wyłącz bloker (uBlock, AdBlock itd.) dla tej strony, a potem kliknij Spróbuj ponownie.",
+    gateRetry: "Spróbuj ponownie",
   },
 };
 

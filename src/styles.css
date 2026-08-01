@@ -932,26 +932,26 @@ select:focus {
 
 /* ---------- Ad slots ---------- */
 
-.ad-slot {
+.promo-slot {
   margin: clamp(1.4rem, 3vw, 2rem) 0;
 }
 
-.ad-slot--leader {
+.promo-slot--leader {
   margin-top: clamp(1.4rem, 3vw, 2rem);
   margin-bottom: clamp(1.2rem, 2.5vw, 1.6rem);
 }
 
-.ad-slot--footer {
+.promo-slot--footer {
   margin-top: clamp(2rem, 4vw, 2.8rem);
   margin-bottom: 0.4rem;
 }
 
-.ad-slot--feed {
+.promo-slot--feed {
   grid-column: 1 / -1;
   margin: 0.2rem 0;
 }
 
-.ad-label {
+.promo-label {
   display: block;
   margin-bottom: 0.35rem;
   font-family: var(--font-mono);
@@ -963,7 +963,7 @@ select:focus {
   text-align: center;
 }
 
-.ad-frame {
+.promo-frame {
   position: relative;
   display: grid;
   place-items: center;
@@ -984,20 +984,20 @@ select:focus {
   overflow: hidden;
 }
 
-.ad-frame--leader {
+.promo-frame--leader {
   min-height: 90px;
   aspect-ratio: 728 / 90;
   max-height: 120px;
 }
 
-.ad-frame--rect {
+.promo-frame--rect {
   max-width: 336px;
   min-height: 280px;
   aspect-ratio: 336 / 280;
 }
 
 /* Rails latéraux fixes : suivent le scroll */
-.ad-rail {
+.promo-rail {
   display: none;
   position: fixed;
   top: 110px;
@@ -1005,27 +1005,27 @@ select:focus {
   width: 160px;
 }
 
-.ad-rail--left {
+.promo-rail--left {
   left: calc(50% - 590px - 190px);
 }
 
-.ad-rail--right {
+.promo-rail--right {
   right: calc(50% - 590px - 190px);
 }
 
-.ad-frame--sky {
+.promo-frame--sky {
   width: 160px;
   min-height: 600px;
 }
 
 /* visibles seulement quand il y a la place à côté du contenu */
 @media (min-width: 1580px) {
-  .ad-rail {
+  .promo-rail {
     display: block;
   }
 }
 
-.ad-placeholder {
+.promo-placeholder {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
@@ -1037,10 +1037,95 @@ select:focus {
 }
 
 /* Conteneur réel pour coller un snippet AdSense plus tard */
-.ad-frame > ins,
-.ad-frame > iframe {
+.promo-frame > ins,
+.promo-frame > iframe {
   display: block;
   margin: 0 auto;
+}
+
+/* ---------- Anti-adblock gate ---------- */
+
+html.gate-locked,
+html.gate-locked body {
+  overflow: hidden;
+}
+
+.access-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(23, 19, 16, 0.15), transparent 55%),
+    rgba(23, 19, 16, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.access-gate[hidden] {
+  display: none !important;
+}
+
+.access-gate-card {
+  width: min(28rem, 100%);
+  padding: 1.6rem 1.5rem 1.4rem;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  text-align: center;
+}
+
+.access-gate-stamp {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.access-gate-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.access-gate-body {
+  margin: 0.9rem 0 1.3rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+.access-gate-btn {
+  appearance: none;
+  border: 3px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.access-gate-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.access-gate-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
 }
 
 /* ---------- Footer ---------- */
@@ -1073,7 +1158,7 @@ select:focus {
     width: 100%;
   }
 
-  .ad-frame--leader {
+  .promo-frame--leader {
     aspect-ratio: auto;
     min-height: 100px;
     max-height: none;

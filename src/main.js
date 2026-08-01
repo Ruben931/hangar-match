@@ -6,6 +6,7 @@ import {
   localeOf,
   t,
 } from "./i18n.js";
+import { detectAdBlock, mountGate, hideGate } from "./adgate.js";
 
 const SIZE_LABELS = {
   small: "Small",
@@ -298,10 +299,10 @@ function specRow(key, value, highlight) {
 
 function adSlotFeed(n) {
   return `
-    <aside class="ad-slot ad-slot--feed" aria-label="${t("adLabel")}">
-      <span class="ad-label">${t("adLabel")}</span>
-      <div class="ad-frame ad-frame--rect" data-ad="infeed-${n}">
-        <span class="ad-placeholder">${t("adFeed")}</span>
+    <aside class="promo-slot promo-slot--feed" aria-label="${t("adLabel")}">
+      <span class="promo-label">${t("adLabel")}</span>
+      <div class="promo-frame promo-frame--rect" data-slot="infeed-${n}">
+        <span class="promo-placeholder">${t("adFeed")}</span>
       </div>
     </aside>`;
 }
@@ -569,19 +570,44 @@ function applyI18n() {
   setText(".empty-start", "emptyStart");
 
   // pubs (labels + placeholders fixes)
-  setText(".ad-label", "adLabel");
-  document.querySelectorAll('.ad-slot, .ad-rail').forEach((el) => {
+  setText(".promo-label", "adLabel");
+  document.querySelectorAll('.promo-slot, .promo-rail').forEach((el) => {
     el.setAttribute("aria-label", t("adLabel"));
   });
-  setHtml('[data-ad="leaderboard"] .ad-placeholder', "adTop");
-  setHtml('[data-ad="footer"] .ad-placeholder', "adBottom");
-  setHtml('[data-ad="sky-left"] .ad-placeholder', "adSky");
-  setHtml('[data-ad="sky-right"] .ad-placeholder', "adSky");
+  setHtml('[data-slot="leaderboard"] .promo-placeholder', "adTop");
+  setHtml('[data-slot="footer"] .promo-placeholder', "adBottom");
+  setHtml('[data-slot="sky-left"] .promo-placeholder', "adSky");
+  setHtml('[data-slot="sky-right"] .promo-placeholder', "adSky");
 
   // pied de page + sélecteur de langue
   setHtml(".site-footer p", "footer");
   const langLabel = document.querySelector('label[for="lang"]');
   if (langLabel) langLabel.textContent = t("langLabel");
+
+  // rafraîchir le texte du portail anti-adblock s'il est ouvert
+  const gate = document.querySelector("#access-gate:not([hidden])");
+  if (gate) {
+    gate.querySelector(".access-gate-title").textContent = t("gateTitle");
+    gate.querySelector(".access-gate-body").textContent = t("gateBody");
+    gate.querySelector(".access-gate-btn").textContent = t("gateRetry");
+  }
+}
+
+async function enforceAdGate() {
+  const blocked = await detectAdBlock();
+  if (!blocked) {
+    hideGate();
+    return false;
+  }
+  mountGate({
+    title: t("gateTitle"),
+    body: t("gateBody"),
+    retry: t("gateRetry"),
+    onRetry: () => {
+      enforceAdGate();
+    },
+  });
+  return true;
 }
 
 function setupLangSelect() {
@@ -602,6 +628,11 @@ async function init() {
   setupLangSelect();
   renderRoles();
   applyI18n();
+
+  await enforceAdGate();
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") enforceAdGate();
+  });
 
   const res = await fetch("/data/ships.json");
   ships = await res.json();
@@ -626,6 +657,7 @@ async function init() {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    if (document.documentElement.classList.contains("gate-locked")) return;
     hasSearched = true;
     render();
     document.querySelector(".results-wrap")?.scrollIntoView({
