@@ -6,3 +6,5 @@ ship-matrix.json
 scw-ships.json
 .vercel
 .env*
+hangar-match-desktop/out
+hangar-match-desktop/.vite

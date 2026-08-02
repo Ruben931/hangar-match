@@ -68,6 +68,7 @@ export function applyToolsChrome(active) {
   setText("#nav-compare", "navCompare");
   setText("#nav-best", "navBest");
   setText("#nav-tools", "navTools");
+  setText("#nav-app", "navApp");
   setText("#link-legal", "linkLegal");
   setText("#link-privacy", "linkPrivacy");
   setText(".promo-label", "adLabel");

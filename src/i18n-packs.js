@@ -223,6 +223,10 @@ const TOOLS_FR = {
   compareSwap: "⇄",
   compareManufacturer: "Constructeur",
   compareStatus: "Statut",
+  navApp: "App Desktop",
+  appPageTitle: "Hangar Match Desktop",
+  appPageLede:
+    "L’app Windows payante : outils compagnon + pont local avec Star Citizen (processus & Game.log).",
 };
 
 const TOOLS_EN = {
@@ -282,6 +286,10 @@ const TOOLS_EN = {
   compareSwap: "⇄",
   compareManufacturer: "Manufacturer",
   compareStatus: "Status",
+  navApp: "Desktop app",
+  appPageTitle: "Hangar Match Desktop",
+  appPageLede:
+    "Paid Windows app: companion tools + local Star Citizen bridge (process & Game.log).",
 };
 
 export const FR_EXTRA = {

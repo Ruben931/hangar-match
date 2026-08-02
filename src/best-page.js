@@ -179,6 +179,7 @@ function applyChrome() {
   setText("#nav-compare", "navCompare");
   setText("#nav-best", "navBest");
   setText("#nav-tools", "navTools");
+  setText("#nav-app", "navApp");
   setText("#link-legal", "linkLegal");
   setText("#link-privacy", "linkPrivacy");
   setText("#best-hub-title", "bestHubTitle");

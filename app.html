@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2598514579769865"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hangar Match Desktop — App Windows payante</title>
+    <meta
+      name="description"
+      content="Hangar Match Desktop : app Windows avec hangar, trade UEX, comparateur et connexion locale à Star Citizen (processus + Game.log). Paiement Lemon Squeezy."
+    />
+    <link rel="canonical" href="https://hangarmatch.org/app.html" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="masthead shell">
+      <div class="masthead-top">
+        <span class="lang-pick">
+          <label class="sr-only" for="lang">Langue</label>
+          <select id="lang"></select>
+        </span>
+      </div>
+      <h1 class="best-page-title" id="app-title">Hangar Match Desktop</h1>
+      <p class="lede" id="app-lede">
+        L’app Windows payante : outils compagnon + pont local avec Star Citizen.
+      </p>
+      <nav class="mode-nav" aria-label="Navigation">
+        <a class="mode-nav-btn" href="/#finder-form" id="nav-compare">Comparateur</a>
+        <a class="mode-nav-btn" href="/meilleurs-vaisseaux.html" id="nav-best">Meilleurs vaisseaux</a>
+        <a class="mode-nav-btn" href="/outils.html" id="nav-tools">Outils</a>
+        <a class="mode-nav-btn is-active" href="/app.html" id="nav-app" aria-current="page">App Desktop</a>
+      </nav>
+    </header>
+
+    <main class="shell best-main tools-main">
+      <aside class="promo-slot promo-slot--leader" aria-label="Espace publicitaire">
+        <span class="promo-label">Publicité</span>
+        <div class="promo-frame promo-frame--leader" data-slot="leaderboard">
+          <span class="promo-placeholder">728 × 90</span>
+        </div>
+      </aside>
+
+      <div class="tools-cards">
+        <div class="tools-card" style="cursor:default">
+          <span class="tools-card-kicker">Inclus</span>
+          <strong>Pont jeu local</strong>
+          <p>Détecte Star Citizen et lit le Game.log — sans cheat, sans lecture mémoire.</p>
+        </div>
+        <div class="tools-card" style="cursor:default">
+          <span class="tools-card-kicker">Inclus</span>
+          <strong>Hangar · Trade · Compare</strong>
+          <p>Même logique que les outils web, en app native Windows.</p>
+        </div>
+        <div class="tools-card" style="cursor:default">
+          <span class="tools-card-kicker">Paiement</span>
+          <strong>Lemon Squeezy</strong>
+          <p>Checkout simple + clé de licence. Tu actives l’app sur ton PC.</p>
+        </div>
+      </div>
+
+      <div class="tools-panel" style="margin-top:1.25rem">
+        <p id="app-price-note" class="tools-muted" style="margin-top:0">
+          Crée le produit sur Lemon Squeezy, colle le lien checkout dans l’app
+          (<code>hangar-match-desktop/src/config.js</code>), puis publie l’installateur Windows.
+        </p>
+        <div class="best-toolbar" style="margin-top:0.85rem">
+          <a
+            class="search-btn best-cta"
+            id="app-buy"
+            href="https://hangarmatch.lemonsqueezy.com/buy/REPLACE_ME"
+            rel="noopener"
+            >Acheter (Lemon Squeezy)</a
+          >
+          <a class="best-link" href="/outils.html" id="app-free-tools">Essayer les outils web gratuits →</a>
+        </div>
+      </div>
+
+      <p class="tools-disclaimer" id="app-disclaimer">
+        L’app ne se connecte pas aux serveurs de jeu CIG et n’automatise pas le client.
+        Fan project, non affilié à Cloud Imperium Games.
+      </p>
+    </main>
+
+    <footer class="site-footer shell">
+      <p id="footer-copy"></p>
+      <p class="footer-links">
+        <a href="/mentions-legales.html" id="link-legal">Mentions légales</a> ·
+        <a href="/confidentialite.html" id="link-privacy">Confidentialité</a>
+      </p>
+    </footer>
+    <script type="module">
+      import { LANG_CHOICES, initLang, getLang, setLang, t } from "/src/i18n.js";
+      import { mountAds } from "/src/ads.js";
+
+      initLang();
+      const sel = document.querySelector("#lang");
+      sel.innerHTML = LANG_CHOICES.map(
+        (l) =>
+          `<option value="${l.code}" ${l.code === getLang() ? "selected" : ""}>${l.label}</option>`
+      ).join("");
+      sel.onchange = () => {
+        setLang(sel.value);
+        location.reload();
+      };
+
+      document.documentElement.lang = getLang();
+      const set = (id, key) => {
+        const el = document.querySelector(id);
+        if (el) el.textContent = t(key);
+      };
+      set("#nav-compare", "navCompare");
+      set("#nav-best", "navBest");
+      set("#nav-tools", "navTools");
+      set("#nav-app", "navApp");
+      set("#app-title", "appPageTitle");
+      set("#app-lede", "appPageLede");
+      set("#link-legal", "linkLegal");
+      set("#link-privacy", "linkPrivacy");
+      const foot = document.querySelector("#footer-copy");
+      if (foot) foot.innerHTML = t("footer");
+      document.title = `${t("appPageTitle")} — Hangar Match`;
+      mountAds();
+    </script>
+  </body>
+</html>

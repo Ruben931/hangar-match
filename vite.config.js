@@ -25,6 +25,7 @@ export default defineConfig({
         privacy: resolve(__dirname, "confidentialite.html"),
         bestHub: resolve(__dirname, "meilleurs-vaisseaux.html"),
         toolsHub: resolve(__dirname, "outils.html"),
+        appDesktop: resolve(__dirname, "app.html"),
         ...bestPages,
         ...toolsPages,
       },

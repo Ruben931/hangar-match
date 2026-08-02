@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "rebuild-ships": "node scripts/rebuild-ships.mjs",
     "gen-best-pages": "node scripts/gen-best-pages.mjs",
-    "fetch-uex": "node scripts/fetch-uex.mjs"
+    "fetch-uex": "node scripts/fetch-uex.mjs",
+    "desktop": "npm --prefix hangar-match-desktop start",
+    "desktop:make": "npm --prefix hangar-match-desktop run make"
   },
   "devDependencies": {
     "vite": "^6.3.5"

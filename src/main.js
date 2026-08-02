@@ -706,6 +706,7 @@ function applyI18n() {
   setText("#nav-compare", "navCompare");
   setText("#nav-best", "navBest");
   setText("#nav-tools", "navTools");
+  setText("#nav-app", "navApp");
   setText("#nav-best-all", "bestAllCats");
   document.querySelectorAll("[data-role-label]").forEach((a) => {
     a.textContent = t(`roles.${a.dataset.roleLabel}`);
