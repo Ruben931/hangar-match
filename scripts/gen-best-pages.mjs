@@ -21,14 +21,6 @@ const template = (cat) => `<!DOCTYPE html>
      crossorigin="anonymous"></script>
     <script async src="https://fundingchoicesmessages.google.com/i/pub-2598514579769865?ers=1"></script>
     <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
-    <script>
-      window.adsbygoogle = window.adsbygoogle || [];
-      window.adsbygoogle.push({
-        google_ad_client: "ca-pub-2598514579769865",
-        enable_page_level_ads: true,
-        overlays: { bottom: true },
-      });
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${cat.title.fr} — Hangar Match</title>
     <meta name="description" content="${cat.description.fr.replace(/"/g, "&quot;")}" />

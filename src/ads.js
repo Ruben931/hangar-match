@@ -1,14 +1,15 @@
 /**
- * Google AdSense — pubs dans les cadres + Auto ads page-level.
+ * Google AdSense — uniquement dans TES emplacements (.promo-frame).
+ * Pas d’Auto ads page-level (sinon Google place où il veut).
  *
- * Pour que les cadres se remplissent : crée une unité Display responsive
- * dans AdSense, puis mets l’ID dans .env → VITE_ADSENSE_SLOT=xxxxxxxxx
- * (ou colle-le directement dans AD_SLOT ci-dessous).
+ * 1. Dans AdSense : désactive Auto ads (ou coupe overlays / in-page).
+ * 2. Crée une unité Display responsive.
+ * 3. Colle l’ID dans AD_SLOT (ou VITE_ADSENSE_SLOT dans .env).
  */
 
 export const AD_CLIENT = "ca-pub-2598514579769865";
 
-/** ID d’unité Display (AdSense → Annonces → Par unité publicitaire) */
+/** ID unité Display — AdSense → Annonces → Par unité publicitaire */
 export const AD_SLOT =
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_ADSENSE_SLOT) ||
   "";
@@ -27,32 +28,11 @@ function formatFor(name) {
   return FORMAT_BY_SLOT[name] || { format: "auto", minHeight: "100px" };
 }
 
-function ensurePageLevelAds() {
-  window.adsbygoogle = window.adsbygoogle || [];
-  if (window.__hmPageAds) return;
-  window.__hmPageAds = true;
-  try {
-    window.adsbygoogle.push({
-      google_ad_client: AD_CLIENT,
-      enable_page_level_ads: true,
-      overlays: { bottom: true },
-    });
-  } catch {
-    /* ignore */
-  }
-}
-
 function mountFrame(frame) {
   if (!frame || frame.dataset.adMounted === "1") return;
   frame.dataset.adMounted = "1";
 
-  const wrap = frame.closest(".promo-slot, .promo-rail") || frame;
-  wrap.hidden = false;
-  wrap.removeAttribute("aria-hidden");
-  wrap.classList.remove("promo-empty");
-
-  // Sans ID d’unité : on garde le placeholder (pas de rectangle blanc vide)
-  // Les Auto ads page-level s’occupent d’afficher des pubs ailleurs sur la page.
+  // Sans ID d’unité : placeholder visible, aucune pub “au hasard”
   if (!AD_SLOT) return;
 
   const name = frame.getAttribute("data-slot") || "auto";
@@ -85,9 +65,9 @@ function mountFrame(frame) {
   const reveal = () => {
     const status = ins.getAttribute("data-ad-status");
     const iframe = frame.querySelector("iframe");
-    const filled =
-      status === "filled" || (iframe && iframe.offsetHeight > 20);
-    if (filled && placeholder) placeholder.remove();
+    if (status === "filled" || (iframe && iframe.offsetHeight > 20)) {
+      placeholder?.remove();
+    }
   };
 
   const mo = new MutationObserver(reveal);
@@ -100,6 +80,5 @@ function mountFrame(frame) {
 }
 
 export function mountAds(root = document) {
-  ensurePageLevelAds();
   root.querySelectorAll(".promo-frame[data-slot]").forEach(mountFrame);
 }
