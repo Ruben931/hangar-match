@@ -180,6 +180,10 @@ function applyChrome() {
   setText("#nav-best", "navBest");
   setText("#nav-tools", "navTools");
   setText("#nav-app", "navApp");
+  setText("#app-teaser-stamp", "appTeaserStamp");
+  setText("#app-teaser-title", "appTeaserTitle");
+  setText("#app-teaser-text", "appTeaserText");
+  setText("#app-teaser-cta", "appTeaserCta");
   setText("#link-legal", "linkLegal");
   setText("#link-privacy", "linkPrivacy");
   setText("#best-hub-title", "bestHubTitle");

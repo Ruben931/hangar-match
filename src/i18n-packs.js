@@ -230,8 +230,8 @@ const TOOLS_FR = {
   appTeaserStamp: "Bientôt",
   appTeaserTitle: "Hangar Match Desktop",
   appTeaserText:
-    "App Windows payante — pont local avec le jeu, hangar, trade & plus.",
-  appTeaserCta: "Voir le teaser →",
+    "App Windows — pont avec le jeu · hangar · trade. En approche.",
+  appTeaserCta: "Découvrir →",
   appTeaserHeroTitle: "L’app PC débarque",
   appTeaserHeroText:
     "Hangar Match Desktop : pont local avec le jeu, hangar perso, rentabilité cargo et comparateur — installable sur Windows. Paiement simple, clé de licence. Ouverture des ventes très bientôt.",
@@ -314,8 +314,8 @@ const TOOLS_EN = {
   appTeaserStamp: "Coming soon",
   appTeaserTitle: "Hangar Match Desktop",
   appTeaserText:
-    "Paid Windows app — local game bridge, hangar, trade & more.",
-  appTeaserCta: "See the teaser →",
+    "Windows app — game bridge · hangar · trade. Coming up.",
+  appTeaserCta: "Discover →",
   appTeaserHeroTitle: "The PC app is coming",
   appTeaserHeroText:
     "Hangar Match Desktop: local game bridge, personal hangar, cargo profits and ship compare — installable on Windows. Simple checkout, license key. Sales opening very soon.",
