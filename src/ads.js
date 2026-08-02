@@ -11,7 +11,7 @@ export const AD_CLIENT = "ca-pub-2598514579769865";
 export const AD_SLOTS = {
   leaderboard: "7963958332", // aperçu haut
   footer: "6650876663", // aperçu bas
-  "sky-left": "",
+  "sky-left": "9485903504", // aperçu côté gauche
   "sky-right": "",
   // carrés dans la liste (infeed) : un seul ID Display suffit, réutilisé
   infeed: "",
