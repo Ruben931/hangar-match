@@ -16,11 +16,11 @@ function render() {
   });
 
   const stamp = document.querySelector("#app-teaser-stamp");
-  const title = document.querySelector("#app-teaser-title");
+  const teaserTitle = document.querySelector("#app-teaser-title");
   const text = document.querySelector("#app-teaser-text");
   const cta = document.querySelector("#app-teaser-cta");
   if (stamp) stamp.textContent = t("appTeaserStamp");
-  if (title) title.textContent = t("appTeaserTitle");
+  if (teaserTitle) teaserTitle.textContent = t("appTeaserTitle");
   if (text) text.textContent = t("appTeaserText");
   if (cta) cta.textContent = t("appTeaserCta");
 }
