@@ -1,25 +1,35 @@
 /**
- * Google AdSense — uniquement dans TES emplacements (.promo-frame).
- * Pas d’Auto ads page-level (sinon Google place où il veut).
+ * Google AdSense — pubs uniquement dans TES emplacements (.promo-frame).
+ * Pas d’Auto ads page-level.
  *
- * 1. Dans AdSense : désactive Auto ads (ou coupe overlays / in-page).
- * 2. Crée une unité Display responsive.
- * 3. Colle l’ID dans AD_SLOT (ou VITE_ADSENSE_SLOT dans .env).
+ * Ajoute d’autres IDs quand tu crées des unités (bas, côtés, feed…).
  */
 
 export const AD_CLIENT = "ca-pub-2598514579769865";
 
-/** ID unité Display — AdSense → Annonces → Par unité publicitaire */
-export const AD_SLOT =
-  (typeof import.meta !== "undefined" && import.meta.env?.VITE_ADSENSE_SLOT) ||
-  "";
+/** ID par emplacement (data-slot sur le HTML) */
+export const AD_SLOTS = {
+  leaderboard: "7963958332", // aperçu haut
+  footer: "",
+  "sky-left": "",
+  "sky-right": "",
+  // infeed-1, infeed-2… : laisse vide ou mets un ID Display
+};
 
 const FORMAT_BY_SLOT = {
-  leaderboard: { format: "horizontal", minHeight: "90px" },
-  footer: { format: "horizontal", minHeight: "90px" },
+  leaderboard: { format: "auto", minHeight: "90px" },
+  footer: { format: "auto", minHeight: "90px" },
   "sky-left": { format: "vertical", minHeight: "600px" },
   "sky-right": { format: "vertical", minHeight: "600px" },
 };
+
+function slotIdFor(name) {
+  if (AD_SLOTS[name]) return AD_SLOTS[name];
+  if (name && String(name).startsWith("infeed")) {
+    return AD_SLOTS.infeed || AD_SLOTS.feed || "";
+  }
+  return "";
+}
 
 function formatFor(name) {
   if (name && String(name).startsWith("infeed")) {
@@ -30,12 +40,13 @@ function formatFor(name) {
 
 function mountFrame(frame) {
   if (!frame || frame.dataset.adMounted === "1") return;
+
+  const name = frame.getAttribute("data-slot") || "";
+  const slotId = slotIdFor(name);
+  if (!slotId) return;
+
   frame.dataset.adMounted = "1";
 
-  // Sans ID d’unité : placeholder visible, aucune pub “au hasard”
-  if (!AD_SLOT) return;
-
-  const name = frame.getAttribute("data-slot") || "auto";
   const { format, minHeight } = formatFor(name);
   const placeholder = frame.querySelector(".promo-placeholder");
 
@@ -45,13 +56,8 @@ function mountFrame(frame) {
   ins.style.minHeight = minHeight;
   ins.style.width = "100%";
   ins.setAttribute("data-ad-client", AD_CLIENT);
-  ins.setAttribute("data-ad-slot", AD_SLOT);
-  ins.setAttribute(
-    "data-ad-format",
-    format === "horizontal" || format === "vertical" || format === "rectangle"
-      ? format
-      : "auto"
-  );
+  ins.setAttribute("data-ad-slot", slotId);
+  ins.setAttribute("data-ad-format", format);
   ins.setAttribute("data-full-width-responsive", "true");
   frame.appendChild(ins);
   frame.classList.add("promo-frame--live");
