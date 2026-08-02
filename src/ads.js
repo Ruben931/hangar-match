@@ -12,7 +12,7 @@ export const AD_SLOTS = {
   leaderboard: "7963958332", // aperçu haut
   footer: "6650876663", // aperçu bas
   "sky-left": "9485903504", // aperçu côté gauche
-  "sky-right": "",
+  "sky-right": "1398549982", // aperçu côté droit
   // carrés dans la liste (infeed) : un seul ID Display suffit, réutilisé
   infeed: "",
 };
