@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "rebuild-ships": "node scripts/rebuild-ships.mjs"
+    "rebuild-ships": "node scripts/rebuild-ships.mjs",
+    "gen-best-pages": "node scripts/gen-best-pages.mjs"
   },
   "devDependencies": {
     "vite": "^6.3.5"

@@ -1,0 +1,98 @@
+/**
+ * Génère les pages HTML /meilleurs-vaisseaux/{slug}.html
+ * à partir de src/categories.js
+ */
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { CATEGORIES } from "../src/categories.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = path.resolve(__dirname, "..");
+const outDir = path.join(root, "meilleurs-vaisseaux");
+
+fs.mkdirSync(outDir, { recursive: true });
+
+const template = (cat) => `<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2598514579769865"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${cat.title.fr} — Hangar Match</title>
+    <meta name="description" content="${cat.description.fr.replace(/"/g, "&quot;")}" />
+    <link rel="canonical" href="https://hangarmatch.org/meilleurs-vaisseaux/${cat.slug}.html" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#05070c" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hangar Match" />
+    <meta property="og:url" content="https://hangarmatch.org/meilleurs-vaisseaux/${cat.slug}.html" />
+    <meta property="og:title" content="${cat.title.fr}" />
+    <meta property="og:description" content="${cat.description.fr.replace(/"/g, "&quot;")}" />
+    <meta property="og:image" content="https://hangarmatch.org/icon-512.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body data-role="${cat.role}" data-slug="${cat.slug}">
+    <header class="masthead shell">
+      <div class="masthead-top">
+        <nav class="site-nav" aria-label="Navigation">
+          <a href="/" id="nav-home">Accueil</a>
+          <a href="/#finder-form" id="nav-compare">Comparateur</a>
+          <a href="/meilleurs-vaisseaux.html" id="nav-best" aria-current="page">Meilleurs vaisseaux</a>
+        </nav>
+        <span id="registry-line">Registre : <b id="db-count">—</b></span>
+        <span class="lang-pick">
+          <label class="sr-only" for="lang">Langue</label>
+          <select id="lang"></select>
+        </span>
+      </div>
+      <p class="best-crumb">
+        <a href="/meilleurs-vaisseaux.html" id="best-back">← Toutes les catégories</a>
+      </p>
+      <h1 class="best-page-title" id="best-title">${cat.title.fr}</h1>
+      <p class="lede" id="best-intro">${cat.intro.fr}</p>
+    </header>
+
+    <main class="shell best-main">
+      <div class="best-toolbar">
+        <p id="best-count" class="results-count"></p>
+        <a class="search-btn best-cta" id="best-cta" href="/?roles=${cat.role}">Affiner avec mon budget</a>
+      </div>
+      <div id="best-list" class="best-list"></div>
+
+      <section class="best-also">
+        <h2 id="best-also">Autres catégories</h2>
+        <div id="best-also-grid" class="cat-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer shell">
+      <p id="footer-copy"></p>
+      <p class="footer-links">
+        <a href="/mentions-legales.html" id="link-legal">Mentions légales</a> ·
+        <a href="/confidentialite.html" id="link-privacy">Confidentialité</a>
+      </p>
+    </footer>
+    <script type="module" src="/src/best-page.js"></script>
+  </body>
+</html>
+`;
+
+for (const cat of CATEGORIES) {
+  const file = path.join(outDir, `${cat.slug}.html`);
+  fs.writeFileSync(file, template(cat), "utf8");
+  console.log("wrote", path.relative(root, file));
+}
+
+console.log(`Done — ${CATEGORIES.length} category pages.`);

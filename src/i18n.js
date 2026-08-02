@@ -147,6 +147,18 @@ export const TRANSLATIONS = {
     gateRetry: "Réessayer",
     linkLegal: "Mentions légales",
     linkPrivacy: "Confidentialité",
+    navHome: "Accueil",
+    navCompare: "Comparateur",
+    navBest: "Meilleurs vaisseaux",
+    bestHubTitle: "Meilleurs vaisseaux par catégorie",
+    bestHubLede:
+      "Choisis une activité — on te liste les meilleurs appareils du registre, puis tu affines avec ton budget dans le comparateur.",
+    bestBack: "← Toutes les catégories",
+    bestCtaCompare: "Affiner avec mon budget",
+    bestOpenCompare: "Voir dans le comparateur",
+    bestCount: "Top {n} · {total} appareils dans cette catégorie",
+    bestEmpty: "Aucun vaisseau dans cette catégorie pour le moment.",
+    bestAlsoTitle: "Autres catégories",
   },
 
   en: {
@@ -269,6 +281,18 @@ export const TRANSLATIONS = {
     gateRetry: "Try again",
     linkLegal: "Legal notice",
     linkPrivacy: "Privacy",
+    navHome: "Home",
+    navCompare: "Comparator",
+    navBest: "Best ships",
+    bestHubTitle: "Best ships by category",
+    bestHubLede:
+      "Pick an activity — we list the best ships from the registry, then you refine with your budget in the comparator.",
+    bestBack: "← All categories",
+    bestCtaCompare: "Refine with my budget",
+    bestOpenCompare: "Open in comparator",
+    bestCount: "Top {n} · {total} ships in this category",
+    bestEmpty: "No ships in this category right now.",
+    bestAlsoTitle: "Other categories",
   },
 
   de: {

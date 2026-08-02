@@ -375,11 +375,25 @@ function filterShips() {
   return list;
 }
 
+function rolesFromUrl() {
+  const raw =
+    new URLSearchParams(location.search).get("roles") ||
+    new URLSearchParams(location.search).get("role") ||
+    "";
+  if (!raw) return null;
+  const ids = raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter((id) => ROLE_IDS.includes(id));
+  return ids.length ? ids : null;
+}
+
 function renderRoles() {
+  const fromDom = roleGrid.querySelectorAll("input:checked").length
+    ? selectedRoles()
+    : null;
   const checked = new Set(
-    roleGrid.querySelectorAll("input:checked").length
-      ? selectedRoles()
-      : ["multipurpose", "cargo"]
+    fromDom || rolesFromUrl() || ["multipurpose", "cargo"]
   );
   roleGrid.innerHTML = ROLE_IDS.map(
     (id) => `
@@ -655,6 +669,9 @@ function applyI18n() {
   }
 
   // masthead
+  setText("#nav-home", "navHome");
+  setText("#nav-compare", "navCompare");
+  setText("#nav-best", "navBest");
   setText("#mast-place", "place");
   setText("#mast-edition", "edition");
   const registryLine = document.querySelector("#registry-line");
