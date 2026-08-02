@@ -19,7 +19,16 @@ const template = (cat) => `<!DOCTYPE html>
     <meta charset="UTF-8" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2598514579769865"
      crossorigin="anonymous"></script>
+    <script async src="https://fundingchoicesmessages.google.com/i/pub-2598514579769865?ers=1"></script>
     <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
+    <script>
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({
+        google_ad_client: "ca-pub-2598514579769865",
+        enable_page_level_ads: true,
+        overlays: { bottom: true },
+      });
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${cat.title.fr} — Hangar Match</title>
     <meta name="description" content="${cat.description.fr.replace(/"/g, "&quot;")}" />
@@ -64,6 +73,12 @@ const template = (cat) => `<!DOCTYPE html>
     </header>
 
     <main class="shell best-main">
+      <aside class="promo-slot promo-slot--leader" aria-label="Espace publicitaire">
+        <span class="promo-label">Publicité</span>
+        <div class="promo-frame promo-frame--leader" data-slot="leaderboard">
+          <span class="promo-placeholder">728 × 90</span>
+        </div>
+      </aside>
       <div class="best-toolbar">
         <p id="best-count" class="results-count"></p>
         <a class="search-btn best-cta" id="best-cta" href="/?roles=${cat.role}">Affiner avec mon budget</a>

@@ -7,6 +7,7 @@ import {
   t,
 } from "./i18n.js";
 import { detectAdBlock, mountGate, hideGate } from "./adgate.js";
+import { mountAds } from "./ads.js";
 import {
   suggestPlaces,
   resolvePlace,
@@ -661,6 +662,7 @@ function render() {
   });
 
   resultsEl.innerHTML = chunks.join("");
+  mountAds(resultsEl);
 }
 
 /** applique les traductions à tout le texte statique de la page */
@@ -756,15 +758,21 @@ function applyI18n() {
   setText(".results-head h2", "resultsTitle");
   setText(".empty-start", "emptyStart");
 
-  // pubs (labels + placeholders fixes)
+  // pubs (labels ; placeholders seulement si pas encore montés)
   setText(".promo-label", "adLabel");
-  document.querySelectorAll('.promo-slot, .promo-rail').forEach((el) => {
+  document.querySelectorAll(".promo-slot, .promo-rail").forEach((el) => {
     el.setAttribute("aria-label", t("adLabel"));
   });
-  setHtml('[data-slot="leaderboard"] .promo-placeholder', "adTop");
-  setHtml('[data-slot="footer"] .promo-placeholder', "adBottom");
-  setHtml('[data-slot="sky-left"] .promo-placeholder', "adSky");
-  setHtml('[data-slot="sky-right"] .promo-placeholder', "adSky");
+  const ph = (sel, key) => {
+    document.querySelectorAll(sel).forEach((el) => {
+      if (el.closest(".promo-frame")?.dataset.adMounted === "1") return;
+      el.innerHTML = t(key);
+    });
+  };
+  ph('[data-slot="leaderboard"] .promo-placeholder', "adTop");
+  ph('[data-slot="footer"] .promo-placeholder', "adBottom");
+  ph('[data-slot="sky-left"] .promo-placeholder', "adSky");
+  ph('[data-slot="sky-right"] .promo-placeholder', "adSky");
 
   // pied de page + sélecteur de langue
   setHtml(".site-footer p:not(.footer-links)", "footer");
@@ -844,6 +852,7 @@ async function init() {
   // afficher une première sélection sans attendre un clic
   hasSearched = true;
   render();
+  mountAds();
 
   budgetInput.addEventListener("input", () => syncBudget(false));
   budgetRange.addEventListener("input", () => syncBudget(true));

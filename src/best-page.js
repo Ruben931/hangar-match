@@ -11,6 +11,7 @@ import {
   categoryBySlug,
   catText,
 } from "./categories.js";
+import { mountAds } from "./ads.js";
 
 const pageRole = document.body.dataset.role || "";
 const pageSlug = document.body.dataset.slug || "";
@@ -230,6 +231,7 @@ async function init() {
   if (isHub) {
     document.title = `${t("bestHubTitle")} — Hangar Match`;
     renderHub();
+    mountAds();
     return;
   }
 
@@ -239,6 +241,7 @@ async function init() {
   if (db) db.textContent = ships.length;
   renderCategory(ships);
   renderAlso();
+  mountAds();
 }
 
 init();

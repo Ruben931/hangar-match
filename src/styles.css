@@ -1270,11 +1270,19 @@ select:focus {
   opacity: 0.75;
 }
 
-/* Conteneur réel pour coller un snippet AdSense plus tard */
-.promo-frame > ins,
+/* Conteneur AdSense live */
+.promo-frame--live {
+  border-style: solid;
+  border-color: rgba(23, 19, 16, 0.2);
+  background: var(--paper);
+}
+
+.promo-frame > ins.adsbygoogle,
 .promo-frame > iframe {
-  display: block;
+  display: block !important;
+  width: 100% !important;
   margin: 0 auto;
+  max-width: 100%;
 }
 
 /* ---------- Anti-adblock gate ---------- */
