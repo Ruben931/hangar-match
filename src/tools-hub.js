@@ -14,6 +14,15 @@ function render() {
   document.querySelectorAll("[data-i18n-html]").forEach((el) => {
     el.innerHTML = t(el.dataset.i18nHtml);
   });
+
+  const stamp = document.querySelector("#app-teaser-stamp");
+  const title = document.querySelector("#app-teaser-title");
+  const text = document.querySelector("#app-teaser-text");
+  const cta = document.querySelector("#app-teaser-cta");
+  if (stamp) stamp.textContent = t("appTeaserStamp");
+  if (title) title.textContent = t("appTeaserTitle");
+  if (text) text.textContent = t("appTeaserText");
+  if (cta) cta.textContent = t("appTeaserCta");
 }
 
 initToolsShell({

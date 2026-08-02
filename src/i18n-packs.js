@@ -227,6 +227,27 @@ const TOOLS_FR = {
   appPageTitle: "Hangar Match Desktop",
   appPageLede:
     "L’app Windows payante : outils compagnon + pont local avec Star Citizen (processus & Game.log).",
+  appTeaserStamp: "Bientôt",
+  appTeaserTitle: "Hangar Match Desktop",
+  appTeaserText:
+    "App Windows payante — pont local avec le jeu, hangar, trade & plus.",
+  appTeaserCta: "Voir le teaser →",
+  appTeaserHeroTitle: "L’app PC débarque",
+  appTeaserHeroText:
+    "Hangar Match Desktop : pont local avec le jeu, hangar perso, rentabilité cargo et comparateur — installable sur Windows. Paiement simple, clé de licence. Ouverture des ventes très bientôt.",
+  appFeat1K: "Pont jeu",
+  appFeat1T: "Client détecté",
+  appFeat1D: "Star Citizen lancé ? L’app le voit et lit le Game.log — sans cheat.",
+  appFeat2K: "Outils",
+  appFeat2T: "Hangar · Trade · Compare",
+  appFeat2D: "Tes vaisseaux, tes marges UEX, deux builds côte à côte.",
+  appFeat3K: "Licence",
+  appFeat3T: "Payant, une fois",
+  appFeat3D: "Achat via Hangar Match — tu actives sur ton PC.",
+  appStayWeb: "Rester sur le comparateur web",
+  appFreeTools: "Essayer les outils web →",
+  appDisclaimer:
+    "Fan project, non affilié à Cloud Imperium Games. Pas d’accès aux serveurs de jeu.",
 };
 
 const TOOLS_EN = {
@@ -290,6 +311,27 @@ const TOOLS_EN = {
   appPageTitle: "Hangar Match Desktop",
   appPageLede:
     "Paid Windows app: companion tools + local Star Citizen bridge (process & Game.log).",
+  appTeaserStamp: "Coming soon",
+  appTeaserTitle: "Hangar Match Desktop",
+  appTeaserText:
+    "Paid Windows app — local game bridge, hangar, trade & more.",
+  appTeaserCta: "See the teaser →",
+  appTeaserHeroTitle: "The PC app is coming",
+  appTeaserHeroText:
+    "Hangar Match Desktop: local game bridge, personal hangar, cargo profits and ship compare — installable on Windows. Simple checkout, license key. Sales opening very soon.",
+  appFeat1K: "Game bridge",
+  appFeat1T: "Client detected",
+  appFeat1D: "Star Citizen running? The app sees it and reads Game.log — no cheats.",
+  appFeat2K: "Tools",
+  appFeat2T: "Hangar · Trade · Compare",
+  appFeat2D: "Your ships, UEX margins, two builds side by side.",
+  appFeat3K: "License",
+  appFeat3T: "Paid, once",
+  appFeat3D: "Buy via Hangar Match — activate on your PC.",
+  appStayWeb: "Stay on the web comparator",
+  appFreeTools: "Try the free web tools →",
+  appDisclaimer:
+    "Fan project, not affiliated with Cloud Imperium Games. No live game-server access.",
 };
 
 export const FR_EXTRA = {

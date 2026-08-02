@@ -1500,6 +1500,182 @@ html.gate-locked body {
   border-top: 3px solid var(--rule);
 }
 
+/* ---------- App Desktop teaser ---------- */
+
+.app-teaser {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem 1.25rem;
+  margin: 1.1rem 0 1.25rem;
+  padding: 1rem 1.2rem;
+  border: 3px solid var(--ink);
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      var(--yellow) 0 10px,
+      #f0d45a 10px 20px
+    );
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 5px 5px 0 var(--ink);
+  overflow: hidden;
+  animation: teaser-in 0.55s ease both;
+}
+
+.app-teaser::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  animation: teaser-shine 3.8s ease-in-out 1s infinite;
+  pointer-events: none;
+}
+
+.app-teaser:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.app-teaser-stamp {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--red);
+  color: #fff8ee;
+  padding: 0.45rem 0.65rem;
+  border: 2px solid var(--ink);
+  transform: rotate(-3deg);
+  animation: teaser-pulse 1.8s ease-in-out infinite;
+}
+
+.app-teaser-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.app-teaser-body strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+
+.app-teaser-body span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  opacity: 0.9;
+}
+
+.app-teaser-cta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.1rem;
+}
+
+.app-teaser-hero {
+  margin-top: 0.35rem;
+  padding: 1.35rem 1.4rem 1.5rem;
+  border: 3px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 6px 6px 0 var(--yellow);
+}
+
+.app-teaser-hero .app-teaser-stamp {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.app-teaser-hero h2 {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--yellow);
+}
+
+.app-teaser-hero p {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: rgba(243, 235, 224, 0.88);
+}
+
+@keyframes teaser-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes teaser-shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  75%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes teaser-pulse {
+  0%,
+  100% {
+    transform: rotate(-3deg) scale(1);
+  }
+  50% {
+    transform: rotate(-3deg) scale(1.04);
+  }
+}
+
+@media (max-width: 720px) {
+  .app-teaser {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .app-teaser-stamp {
+    justify-self: start;
+  }
+
+  .app-teaser-cta {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-teaser,
+  .app-teaser::after,
+  .app-teaser-stamp {
+    animation: none;
+  }
+}
+
 /* ---------- Companion tools ---------- */
 
 .tools-subnav {

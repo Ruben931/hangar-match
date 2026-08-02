@@ -6,10 +6,10 @@
      crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hangar Match Desktop — App Windows payante</title>
+    <title>Hangar Match Desktop — bientôt disponible</title>
     <meta
       name="description"
-      content="Hangar Match Desktop : app Windows avec hangar, trade UEX, comparateur et connexion locale à Star Citizen (processus + Game.log). Paiement Lemon Squeezy."
+      content="Hangar Match Desktop arrive : app Windows avec pont local Star Citizen, hangar, trade et comparateur. Teaser — bientôt en vente."
     />
     <link rel="canonical" href="https://hangarmatch.org/app.html" />
     <meta name="robots" content="index, follow" />
@@ -50,44 +50,39 @@
         </div>
       </aside>
 
-      <div class="tools-cards">
+      <section class="app-teaser-hero" aria-labelledby="teaser-hero-title">
+        <span class="app-teaser-stamp" id="app-teaser-stamp">Bientôt</span>
+        <h2 id="teaser-hero-title">L’app PC débarque</h2>
+        <p id="teaser-hero-text">
+          Hangar Match Desktop : pont local avec le jeu, hangar perso, rentabilité cargo et comparateur — installable sur Windows. Paiement simple, clé de licence. Ouverture des ventes très bientôt.
+        </p>
+      </section>
+
+      <div class="tools-cards" style="margin-top:1.25rem">
         <div class="tools-card" style="cursor:default">
-          <span class="tools-card-kicker">Inclus</span>
-          <strong>Pont jeu local</strong>
-          <p>Détecte Star Citizen et lit le Game.log — sans cheat, sans lecture mémoire.</p>
+          <span class="tools-card-kicker" id="feat1-k">Pont jeu</span>
+          <strong id="feat1-t">Client détecté</strong>
+          <p id="feat1-d">Star Citizen lancé ? L’app le voit et lit le Game.log — sans cheat.</p>
         </div>
         <div class="tools-card" style="cursor:default">
-          <span class="tools-card-kicker">Inclus</span>
-          <strong>Hangar · Trade · Compare</strong>
-          <p>Même logique que les outils web, en app native Windows.</p>
+          <span class="tools-card-kicker" id="feat2-k">Outils</span>
+          <strong id="feat2-t">Hangar · Trade · Compare</strong>
+          <p id="feat2-d">Tes vaisseaux, tes marges UEX, deux builds côte à côte.</p>
         </div>
         <div class="tools-card" style="cursor:default">
-          <span class="tools-card-kicker">Paiement</span>
-          <strong>Lemon Squeezy</strong>
-          <p>Checkout simple + clé de licence. Tu actives l’app sur ton PC.</p>
+          <span class="tools-card-kicker" id="feat3-k">Licence</span>
+          <strong id="feat3-t">Payant, une fois</strong>
+          <p id="feat3-d">Achat via Hangar Match — tu actives sur ton PC.</p>
         </div>
       </div>
 
-      <div class="tools-panel" style="margin-top:1.25rem">
-        <p id="app-price-note" class="tools-muted" style="margin-top:0">
-          Crée le produit sur Lemon Squeezy, colle le lien checkout dans l’app
-          (<code>hangar-match-desktop/src/config.js</code>), puis publie l’installateur Windows.
-        </p>
-        <div class="best-toolbar" style="margin-top:0.85rem">
-          <a
-            class="search-btn best-cta"
-            id="app-buy"
-            href="https://hangarmatch.lemonsqueezy.com/buy/REPLACE_ME"
-            rel="noopener"
-            >Acheter (Lemon Squeezy)</a
-          >
-          <a class="best-link" href="/outils.html" id="app-free-tools">Essayer les outils web gratuits →</a>
-        </div>
+      <div class="best-toolbar" style="margin-top:1.4rem">
+        <a class="search-btn best-cta" href="/#finder-form" id="app-stay">Rester sur le comparateur web</a>
+        <a class="best-link" href="/outils.html" id="app-free-tools">Essayer les outils web →</a>
       </div>
 
       <p class="tools-disclaimer" id="app-disclaimer">
-        L’app ne se connecte pas aux serveurs de jeu CIG et n’automatise pas le client.
-        Fan project, non affilié à Cloud Imperium Games.
+        Fan project, non affilié à Cloud Imperium Games. Pas d’accès aux serveurs de jeu.
       </p>
     </main>
 
@@ -124,11 +119,26 @@
       set("#nav-app", "navApp");
       set("#app-title", "appPageTitle");
       set("#app-lede", "appPageLede");
+      set("#app-teaser-stamp", "appTeaserStamp");
+      set("#teaser-hero-title", "appTeaserHeroTitle");
+      set("#teaser-hero-text", "appTeaserHeroText");
+      set("#feat1-k", "appFeat1K");
+      set("#feat1-t", "appFeat1T");
+      set("#feat1-d", "appFeat1D");
+      set("#feat2-k", "appFeat2K");
+      set("#feat2-t", "appFeat2T");
+      set("#feat2-d", "appFeat2D");
+      set("#feat3-k", "appFeat3K");
+      set("#feat3-t", "appFeat3T");
+      set("#feat3-d", "appFeat3D");
+      set("#app-stay", "appStayWeb");
+      set("#app-free-tools", "appFreeTools");
+      set("#app-disclaimer", "appDisclaimer");
       set("#link-legal", "linkLegal");
       set("#link-privacy", "linkPrivacy");
       const foot = document.querySelector("#footer-copy");
       if (foot) foot.innerHTML = t("footer");
-      document.title = `${t("appPageTitle")} — Hangar Match`;
+      document.title = `${t("appPageTitle")} — ${t("appTeaserStamp")}`;
       mountAds();
     </script>
   </body>

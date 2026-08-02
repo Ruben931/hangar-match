@@ -708,6 +708,10 @@ function applyI18n() {
   setText("#nav-tools", "navTools");
   setText("#nav-app", "navApp");
   setText("#nav-best-all", "bestAllCats");
+  setText("#app-teaser-stamp", "appTeaserStamp");
+  setText("#app-teaser-title", "appTeaserTitle");
+  setText("#app-teaser-text", "appTeaserText");
+  setText("#app-teaser-cta", "appTeaserCta");
   document.querySelectorAll("[data-role-label]").forEach((a) => {
     a.textContent = t(`roles.${a.dataset.roleLabel}`);
   });
