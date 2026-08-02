@@ -1,12 +1,14 @@
 /**
- * Google AdSense
- * - Auto ads page-level (pas de cadres vides)
- * - Unités display dans .promo-frame seulement si AD_SLOT est défini
- *   et seulement si Google remplit vraiment l’annonce
+ * Google AdSense — pubs dans les cadres + Auto ads page-level.
+ *
+ * Pour que les cadres se remplissent : crée une unité Display responsive
+ * dans AdSense, puis mets l’ID dans .env → VITE_ADSENSE_SLOT=xxxxxxxxx
+ * (ou colle-le directement dans AD_SLOT ci-dessous).
  */
 
 export const AD_CLIENT = "ca-pub-2598514579769865";
 
+/** ID d’unité Display (AdSense → Annonces → Par unité publicitaire) */
 export const AD_SLOT =
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_ADSENSE_SLOT) ||
   "";
@@ -25,24 +27,6 @@ function formatFor(name) {
   return FORMAT_BY_SLOT[name] || { format: "auto", minHeight: "100px" };
 }
 
-function wrapOf(frame) {
-  return frame.closest(".promo-slot, .promo-rail") || frame;
-}
-
-function hideWrap(frame) {
-  const wrap = wrapOf(frame);
-  wrap.hidden = true;
-  wrap.setAttribute("aria-hidden", "true");
-  wrap.classList.add("promo-empty");
-}
-
-function showWrap(frame) {
-  const wrap = wrapOf(frame);
-  wrap.hidden = false;
-  wrap.removeAttribute("aria-hidden");
-  wrap.classList.remove("promo-empty");
-}
-
 function ensurePageLevelAds() {
   window.adsbygoogle = window.adsbygoogle || [];
   if (window.__hmPageAds) return;
@@ -58,64 +42,22 @@ function ensurePageLevelAds() {
   }
 }
 
-function watchFill(frame, ins) {
-  const done = (ok) => {
-    if (ok) showWrap(frame);
-    else hideWrap(frame);
-  };
-
-  // AdSense pose data-ad-status="filled" | "unfilled"
-  const check = () => {
-    const status = ins.getAttribute("data-ad-status");
-    if (status === "filled") {
-      done(true);
-      return true;
-    }
-    if (status === "unfilled") {
-      done(false);
-      return true;
-    }
-    // iframe présent avec taille réelle
-    const iframe = frame.querySelector("iframe");
-    if (iframe && iframe.offsetHeight > 20) {
-      done(true);
-      return true;
-    }
-    return false;
-  };
-
-  if (check()) return;
-
-  const mo = new MutationObserver(() => {
-    if (check()) mo.disconnect();
-  });
-  mo.observe(ins, { attributes: true, attributeFilter: ["data-ad-status"] });
-  mo.observe(frame, { childList: true, subtree: true });
-
-  // timeout : pas de pub → on cache le rectangle blanc
-  setTimeout(() => {
-    mo.disconnect();
-    if (!check()) done(false);
-  }, 4000);
-}
-
 function mountFrame(frame) {
   if (!frame || frame.dataset.adMounted === "1") return;
   frame.dataset.adMounted = "1";
 
-  // Sans ID d’unité : on cache les cadres (Auto ads page-level suffit)
-  if (!AD_SLOT) {
-    hideWrap(frame);
-    return;
-  }
+  const wrap = frame.closest(".promo-slot, .promo-rail") || frame;
+  wrap.hidden = false;
+  wrap.removeAttribute("aria-hidden");
+  wrap.classList.remove("promo-empty");
+
+  // Sans ID d’unité : on garde le placeholder (pas de rectangle blanc vide)
+  // Les Auto ads page-level s’occupent d’afficher des pubs ailleurs sur la page.
+  if (!AD_SLOT) return;
 
   const name = frame.getAttribute("data-slot") || "auto";
   const { format, minHeight } = formatFor(name);
-
-  frame.querySelector(".promo-placeholder")?.remove();
-  frame.classList.add("promo-frame--live");
-  // caché jusqu’à ce qu’une vraie pub arrive
-  hideWrap(frame);
+  const placeholder = frame.querySelector(".promo-placeholder");
 
   const ins = document.createElement("ins");
   ins.className = "adsbygoogle";
@@ -132,15 +74,29 @@ function mountFrame(frame) {
   );
   ins.setAttribute("data-full-width-responsive", "true");
   frame.appendChild(ins);
+  frame.classList.add("promo-frame--live");
 
   try {
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   } catch {
-    hideWrap(frame);
     return;
   }
 
-  watchFill(frame, ins);
+  const reveal = () => {
+    const status = ins.getAttribute("data-ad-status");
+    const iframe = frame.querySelector("iframe");
+    const filled =
+      status === "filled" || (iframe && iframe.offsetHeight > 20);
+    if (filled && placeholder) placeholder.remove();
+  };
+
+  const mo = new MutationObserver(reveal);
+  mo.observe(ins, { attributes: true, attributeFilter: ["data-ad-status"] });
+  mo.observe(frame, { childList: true, subtree: true });
+  setTimeout(() => {
+    reveal();
+    mo.disconnect();
+  }, 5000);
 }
 
 export function mountAds(root = document) {
