@@ -89,7 +89,7 @@ a {
   }
 }
 
-/* ---------- Site nav ---------- */
+/* ---------- Site / mode nav (cliquable, au-dessus du titre) ---------- */
 
 .site-nav {
   display: flex;
@@ -99,6 +99,8 @@ a {
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  position: relative;
+  z-index: 4;
 }
 
 .site-nav a {
@@ -113,6 +115,77 @@ a {
   border-bottom-color: var(--red);
 }
 
+.mode-nav {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.15rem;
+}
+
+.mode-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.15rem;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.mode-nav-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.mode-nav-btn.is-active,
+.mode-nav-btn[aria-current="page"] {
+  background: var(--yellow, #f5c518);
+}
+
+.mode-cats {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+  max-width: 40rem;
+}
+
+.mode-cats a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.mode-cats a:hover {
+  background: var(--yellow, #f5c518);
+}
+
+.mode-cats-all {
+  border-color: var(--red);
+  color: var(--red);
+  font-weight: 700;
+}
+
 /* ---------- Masthead ---------- */
 
 .masthead {
@@ -123,6 +196,8 @@ a {
 }
 
 .masthead-top {
+  position: relative;
+  z-index: 4;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -175,6 +250,8 @@ a {
 }
 
 .masthead-title {
+  position: relative;
+  z-index: 1;
   margin: 0.6rem 0 0;
   font-family: var(--font-display);
   font-weight: 400;
@@ -182,6 +259,7 @@ a {
   line-height: 0.94;
   letter-spacing: 0.005em;
   text-transform: uppercase;
+  pointer-events: none;
 }
 
 .masthead-title .ast,

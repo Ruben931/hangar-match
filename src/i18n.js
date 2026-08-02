@@ -150,6 +150,7 @@ export const TRANSLATIONS = {
     navHome: "Accueil",
     navCompare: "Comparateur",
     navBest: "Meilleurs vaisseaux",
+    bestAllCats: "Toutes →",
     bestHubTitle: "Meilleurs vaisseaux par catégorie",
     bestHubLede:
       "Choisis une activité — on te liste les meilleurs appareils du registre, puis tu affines avec ton budget dans le comparateur.",
@@ -284,6 +285,7 @@ export const TRANSLATIONS = {
     navHome: "Home",
     navCompare: "Comparator",
     navBest: "Best ships",
+    bestAllCats: "All →",
     bestHubTitle: "Best ships by category",
     bestHubLede:
       "Pick an activity — we list the best ships from the registry, then you refine with your budget in the comparator.",

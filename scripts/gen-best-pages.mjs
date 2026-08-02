@@ -46,11 +46,6 @@ const template = (cat) => `<!DOCTYPE html>
   <body data-role="${cat.role}" data-slug="${cat.slug}">
     <header class="masthead shell">
       <div class="masthead-top">
-        <nav class="site-nav" aria-label="Navigation">
-          <a href="/" id="nav-home">Accueil</a>
-          <a href="/#finder-form" id="nav-compare">Comparateur</a>
-          <a href="/meilleurs-vaisseaux.html" id="nav-best" aria-current="page">Meilleurs vaisseaux</a>
-        </nav>
         <span id="registry-line">Registre : <b id="db-count">—</b></span>
         <span class="lang-pick">
           <label class="sr-only" for="lang">Langue</label>
@@ -62,6 +57,10 @@ const template = (cat) => `<!DOCTYPE html>
       </p>
       <h1 class="best-page-title" id="best-title">${cat.title.fr}</h1>
       <p class="lede" id="best-intro">${cat.intro.fr}</p>
+      <nav class="mode-nav" aria-label="Navigation">
+        <a class="mode-nav-btn" href="/#finder-form" id="nav-compare">Comparateur</a>
+        <a class="mode-nav-btn is-active" href="/meilleurs-vaisseaux.html" id="nav-best" aria-current="page">Meilleurs vaisseaux</a>
+      </nav>
     </header>
 
     <main class="shell best-main">

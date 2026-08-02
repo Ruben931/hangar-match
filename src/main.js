@@ -672,6 +672,7 @@ function applyI18n() {
   setText("#nav-home", "navHome");
   setText("#nav-compare", "navCompare");
   setText("#nav-best", "navBest");
+  setText("#nav-best-all", "bestAllCats");
   setText("#mast-place", "place");
   setText("#mast-edition", "edition");
   const registryLine = document.querySelector("#registry-line");

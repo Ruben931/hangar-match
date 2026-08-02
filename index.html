@@ -140,11 +140,6 @@
 
     <header class="masthead shell">
       <div class="masthead-top">
-        <nav class="site-nav" aria-label="Navigation">
-          <a href="/" id="nav-home" aria-current="page">Accueil</a>
-          <a href="/#finder-form" id="nav-compare">Comparateur</a>
-          <a href="/meilleurs-vaisseaux.html" id="nav-best">Meilleurs vaisseaux</a>
-        </nav>
         <span id="mast-place">Spatioport de Lorville — Hall 4</span>
         <span id="registry-line">Registre : <b id="db-count">—</b> appareils</span>
         <span id="mast-edition">Édition 2956</span>
@@ -159,6 +154,18 @@
         ton programme de vol — on te sort les appareils qui collent, avec les prix
         aUEC et l'adresse des revendeurs. Sans commission, sans baratin.
       </p>
+      <nav class="mode-nav" aria-label="Navigation">
+        <a class="mode-nav-btn is-active" href="#finder-form" id="nav-compare">Comparateur</a>
+        <a class="mode-nav-btn" href="/meilleurs-vaisseaux.html" id="nav-best">Meilleurs vaisseaux</a>
+      </nav>
+      <div class="mode-cats" id="mode-cats" aria-label="Catégories">
+        <a href="/meilleurs-vaisseaux/cargo.html">Cargo</a>
+        <a href="/meilleurs-vaisseaux/combat.html">Combat</a>
+        <a href="/meilleurs-vaisseaux/mining.html">Mining</a>
+        <a href="/meilleurs-vaisseaux/debutant.html">Débutant</a>
+        <a href="/meilleurs-vaisseaux/exploration.html">Exploration</a>
+        <a href="/meilleurs-vaisseaux.html" class="mode-cats-all" id="nav-best-all">Toutes →</a>
+      </div>
       <span class="badge-edition" aria-hidden="true">Alpha<br />4.9</span>
     </header>
 
