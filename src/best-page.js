@@ -12,18 +12,21 @@ import {
   catText,
 } from "./categories.js";
 
-const SIZE_LABELS = {
-  small: "Small",
-  medium: "Medium",
-  large: "Large",
-  capital: "Capital",
-  ground: "Ground",
-  snub: "Snub",
-};
-
 const pageRole = document.body.dataset.role || "";
 const pageSlug = document.body.dataset.slug || "";
 const isHub = !pageRole;
+
+function sizeLabel(size) {
+  const map = {
+    small: "sizeSmall",
+    snub: "sizeSmall",
+    medium: "sizeMedium",
+    large: "sizeLarge",
+    capital: "sizeCapital",
+    ground: "sizeGround",
+  };
+  return map[size] ? t(map[size]) : size || "—";
+}
 
 function formatAuec(n) {
   if (typeof n !== "number") return "—";
@@ -100,8 +103,8 @@ function renderShipRow(ship, index, role) {
       ${shipThumb(ship)}
       <div class="best-body">
         <h3>${ship.name}</h3>
-        <p class="best-meta">${ship.manufacturer || ""} · ${SIZE_LABELS[ship.size] || ship.size}${
-          ship.productionStatus === "flight-ready" ? " · Flight ready" : ""
+        <p class="best-meta">${ship.manufacturer || ""} · ${sizeLabel(ship.size)}${
+          ship.productionStatus === "flight-ready" ? ` · ${t("flightReady")}` : ""
         }</p>
         <ul class="best-stats">
           <li><span>${t("specBuy")}</span><b>${price}</b></li>
@@ -180,6 +183,9 @@ function applyChrome() {
   setText("#best-hub-lede", "bestHubLede");
   setText("#best-back", "bestBack");
   setText("#best-also", "bestAlsoTitle");
+  setText("#best-hub-compare-title", "bestHubCompareTitle");
+  const hubCompare = document.querySelector("#best-hub-compare-body");
+  if (hubCompare) hubCompare.innerHTML = t("bestHubCompareBody");
 
   const footer = document.querySelector("#footer-copy");
   if (footer) footer.innerHTML = t("footer");

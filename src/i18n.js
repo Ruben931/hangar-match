@@ -4,6 +4,14 @@
  * Les descriptions des vaisseaux viennent de RSI et restent en anglais.
  */
 
+import {
+  EXTRA_KEYS,
+  FR_EXTRA,
+  EN_EXTRA,
+  ZH,
+  JA,
+} from "./i18n-packs.js";
+
 export const LANG_CHOICES = [
   { code: "fr", label: "Français" },
   { code: "en", label: "English" },
@@ -12,6 +20,8 @@ export const LANG_CHOICES = [
   { code: "it", label: "Italiano" },
   { code: "pt", label: "Português" },
   { code: "pl", label: "Polski" },
+  { code: "zh", label: "中文" },
+  { code: "ja", label: "日本語" },
 ];
 
 const LOCALES = {
@@ -22,6 +32,8 @@ const LOCALES = {
   it: "it-IT",
   pt: "pt-BR",
   pl: "pl-PL",
+  zh: "zh-CN",
+  ja: "ja-JP",
 };
 
 const STORAGE_KEY = "hm-lang";
@@ -906,7 +918,17 @@ export const TRANSLATIONS = {
     linkLegal: "Nota prawna",
     linkPrivacy: "Prywatność",
   },
+
+  zh: ZH,
+  ja: JA,
 };
+
+// Fusion des clés ajoutées (nav / guide / tailles / lieux)
+Object.assign(TRANSLATIONS.fr, FR_EXTRA);
+Object.assign(TRANSLATIONS.en, EN_EXTRA);
+for (const [code, pack] of Object.entries(EXTRA_KEYS)) {
+  if (TRANSLATIONS[code]) Object.assign(TRANSLATIONS[code], pack);
+}
 
 let currentLang = "en";
 
@@ -915,7 +937,9 @@ export function detectLang() {
   if (saved && TRANSLATIONS[saved]) return saved;
   const navLangs = navigator.languages || [navigator.language || "en"];
   for (const l of navLangs) {
-    const code = String(l).slice(0, 2).toLowerCase();
+    const raw = String(l).toLowerCase();
+    if (TRANSLATIONS[raw]) return raw;
+    const code = raw.slice(0, 2);
     if (TRANSLATIONS[code]) return code;
   }
   return "en";

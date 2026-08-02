@@ -3,6 +3,8 @@
  * `slug` = URL /meilleurs-vaisseaux/{slug}.html
  */
 
+import { CAT_I18N } from "./category-i18n.js";
+
 export const CATEGORIES = [
   {
     id: "cargo",
@@ -219,6 +221,8 @@ export function categoryByRole(role) {
 }
 
 export function catText(cat, field, lang) {
+  const extra = CAT_I18N[cat.role]?.[field];
+  if (extra?.[lang]) return extra[lang];
   const block = cat[field];
   if (!block) return "";
   return block[lang] || block.en || block.fr || "";

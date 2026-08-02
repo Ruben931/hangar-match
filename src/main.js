@@ -15,14 +15,17 @@ import {
   distanceLocToPlace,
 } from "./places.js";
 
-const SIZE_LABELS = {
-  small: "Small",
-  medium: "Medium",
-  large: "Large",
-  capital: "Capital",
-  ground: "Ground",
-  snub: "Snub",
-};
+function sizeLabel(size) {
+  const map = {
+    small: "sizeSmall",
+    snub: "sizeSmall",
+    medium: "sizeMedium",
+    large: "sizeLarge",
+    capital: "sizeCapital",
+    ground: "sizeGround",
+  };
+  return map[size] ? t(map[size]) : size || "—";
+}
 
 const ROLE_IDS = [
   "starter",
@@ -114,8 +117,8 @@ function renderPlaceSuggest(list) {
     .map(
       (p, i) => `
       <li role="option" data-id="${p.id}" class="${i === placeActiveIndex ? "active" : ""}" id="place-opt-${i}">
-        <b>${p.label}</b>
-        <span>${p.subtitle}</span>
+        <b>${placeLabelOf(p)}</b>
+        <span>${placeSubtitleOf(p)}</span>
       </li>`
     )
     .join("");
@@ -123,9 +126,21 @@ function renderPlaceSuggest(list) {
   placeInput.setAttribute("aria-expanded", "true");
 }
 
+function placeLabelOf(place) {
+  if (!place) return "";
+  if (place.id === "stations") return t("placeStations");
+  return place.label;
+}
+
+function placeSubtitleOf(place) {
+  if (!place) return "";
+  if (place.id === "stations") return t("placeStationsSub");
+  return place.subtitle;
+}
+
 function pickPlace(place) {
   selectedPlace = place;
-  placeInput.value = place ? place.label : "";
+  placeInput.value = place ? placeLabelOf(place) : "";
   syncPlaceClear();
   hidePlaceSuggest();
   if (place && systemSelect) {
@@ -586,7 +601,7 @@ function renderShipCard(ship, index) {
 
         <div class="specs">
           ${specRow(t("specRole"), ship.focus || "—")}
-          ${specRow(t("specSize"), SIZE_LABELS[ship.size] || ship.size)}
+          ${specRow(t("specSize"), sizeLabel(ship.size))}
           ${specRow(t("specCrew"), ship.crew)}
           ${specRow(t("specCargo"), `${ship.cargoScu ?? 0} SCU`)}
           ${specRow(t("specBuy"), buy, canBuyIn(ship, system) && shipBestPrice <= budget)}
@@ -673,6 +688,12 @@ function applyI18n() {
   setText("#nav-compare", "navCompare");
   setText("#nav-best", "navBest");
   setText("#nav-best-all", "bestAllCats");
+  document.querySelectorAll("[data-role-label]").forEach((a) => {
+    a.textContent = t(`roles.${a.dataset.roleLabel}`);
+  });
+  setText("#guide-title", "guideTitle");
+  setHtml("#guide-p1", "guideP1");
+  setHtml("#guide-p2", "guideP2");
   setText("#mast-place", "place");
   setText("#mast-edition", "edition");
   const registryLine = document.querySelector("#registry-line");
@@ -716,6 +737,11 @@ function applyI18n() {
   setText('#domain option[value="air"]', "domAir");
   setText('#domain option[value="ground"]', "domGround");
   setText('#size option[value="any"]', "sizeAny");
+  setText('#size option[value="small"]', "sizeSmall");
+  setText('#size option[value="medium"]', "sizeMedium");
+  setText('#size option[value="large"]', "sizeLarge");
+  setText('#size option[value="capital"]', "sizeCapital");
+  setText('#size option[value="ground"]', "sizeGround");
   setText('#acquire option[value="buy"]', "acqBuy");
   setText('#acquire option[value="rent"]', "acqRent");
   setText('#acquire option[value="both"]', "acqBoth");
