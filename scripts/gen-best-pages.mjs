@@ -61,6 +61,7 @@ const template = (cat) => `<!DOCTYPE html>
       <nav class="mode-nav" aria-label="Navigation">
         <a class="mode-nav-btn" href="/#finder-form" id="nav-compare">Comparateur</a>
         <a class="mode-nav-btn is-active" href="/meilleurs-vaisseaux.html" id="nav-best" aria-current="page">Meilleurs vaisseaux</a>
+        <a class="mode-nav-btn" href="/outils.html" id="nav-tools">Outils</a>
       </nav>
     </header>
 

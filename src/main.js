@@ -319,6 +319,16 @@ function inDomain(ship, domain) {
   return !isGround(ship); // air
 }
 
+function idsFromUrl() {
+  const raw = new URLSearchParams(location.search).get("ids") || "";
+  if (!raw) return null;
+  const ids = raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return ids.length ? new Set(ids) : null;
+}
+
 function filterShips() {
   const budget = Number(budgetInput.value) || 0;
   const roles = selectedRoles();
@@ -330,10 +340,11 @@ function filterShips() {
   const q = queryInput.value.trim();
   const byName = Boolean(q);
   const place = selectedPlace;
+  const hangarIds = idsFromUrl();
 
   let list = ships
     .map((ship) => {
-      const mode = matchMode(ship, budget, acquire, catalog, system, byName);
+      const mode = matchMode(ship, budget, acquire, catalog, system, byName || hangarIds);
       const distLocs = locsForPlaceDistance(ship, system, acquire, mode);
       return {
         ...ship,
@@ -342,12 +353,17 @@ function filterShips() {
         distance: shipDistanceToPlace(ship, place, distLocs, []),
       };
     })
+    .filter((ship) => (hangarIds ? hangarIds.has(String(ship.id)) : true))
     .filter((ship) => matchesQuery(ship, q))
-    .filter((ship) => inCatalog(ship, catalog, system))
-    .filter((ship) => inDomain(ship, domain))
-    .filter((ship) => (size === "any" ? true : ship.size === size))
+    .filter((ship) =>
+      hangarIds ? true : inCatalog(ship, catalog, system)
+    )
+    .filter((ship) => (hangarIds ? true : inDomain(ship, domain)))
+    .filter((ship) =>
+      hangarIds || size === "any" ? true : ship.size === size
+    )
     .filter((ship) => ship.matchAcquire != null)
-    .filter((ship) => (byName || !roles.length ? true : ship.score > 0));
+    .filter((ship) => (byName || hangarIds || !roles.length ? true : ship.score > 0));
 
   const sort = sortSelect.value;
   list.sort((a, b) => {
@@ -689,6 +705,7 @@ function applyI18n() {
   setText("#nav-home", "navHome");
   setText("#nav-compare", "navCompare");
   setText("#nav-best", "navBest");
+  setText("#nav-tools", "navTools");
   setText("#nav-best-all", "bestAllCats");
   document.querySelectorAll("[data-role-label]").forEach((a) => {
     a.textContent = t(`roles.${a.dataset.roleLabel}`);

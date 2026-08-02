@@ -9,6 +9,13 @@ const bestPages = Object.fromEntries(
     .map((f) => [`best-${f.replace(/\.html$/, "")}`, resolve(bestDir, f)])
 );
 
+const toolsDir = resolve(__dirname, "outils");
+const toolsPages = Object.fromEntries(
+  readdirSync(toolsDir)
+    .filter((f) => f.endsWith(".html"))
+    .map((f) => [`tools-${f.replace(/\.html$/, "")}`, resolve(toolsDir, f)])
+);
+
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -17,7 +24,9 @@ export default defineConfig({
         legal: resolve(__dirname, "mentions-legales.html"),
         privacy: resolve(__dirname, "confidentialite.html"),
         bestHub: resolve(__dirname, "meilleurs-vaisseaux.html"),
+        toolsHub: resolve(__dirname, "outils.html"),
         ...bestPages,
+        ...toolsPages,
       },
     },
   },

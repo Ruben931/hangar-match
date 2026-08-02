@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2598514579769865"
+     crossorigin="anonymous"></script>
+    <script async src="https://fundingchoicesmessages.google.com/i/pub-2598514579769865?ers=1"></script>
+    <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outils Star Citizen — Hangar Match</title>
+    <meta
+      name="description"
+      content="Outils compagnon Hangar Match : hangar perso, rentabilité cargo (prix UEX), comparateur 2 vaisseaux. Données hors jeu, sans compte."
+    />
+    <link rel="canonical" href="https://hangarmatch.org/outils.html" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#05070c" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hangar Match" />
+    <meta property="og:url" content="https://hangarmatch.org/outils.html" />
+    <meta property="og:title" content="Outils Star Citizen — Hangar Match" />
+    <meta
+      property="og:description"
+      content="Hangar perso, rentabilité trade et comparateur 2 vaisseaux — outils hors jeu."
+    />
+    <meta property="og:image" content="https://hangarmatch.org/icon-512.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="masthead shell">
+      <div class="masthead-top">
+        <span class="lang-pick">
+          <label class="sr-only" for="lang">Langue</label>
+          <select id="lang"></select>
+        </span>
+      </div>
+      <h1 class="best-page-title" id="tools-title">Outils</h1>
+      <p class="lede" id="tools-lede">
+        Compagnon hors jeu : hangar, trade et comparaisons — sans connexion au client Star Citizen.
+      </p>
+      <nav class="mode-nav" aria-label="Navigation">
+        <a class="mode-nav-btn" href="/#finder-form" data-nav="compare" id="nav-compare">Comparateur</a>
+        <a class="mode-nav-btn" href="/meilleurs-vaisseaux.html" data-nav="best" id="nav-best">Meilleurs vaisseaux</a>
+        <a class="mode-nav-btn is-active" href="/outils.html" data-nav="tools" id="nav-tools" aria-current="page">Outils</a>
+      </nav>
+      <nav class="tools-subnav" aria-label="Outils">
+        <a href="/outils.html" data-tool="hub" class="is-active">Hub</a>
+        <a href="/outils/hangar.html" data-tool="hangar">Mon hangar</a>
+        <a href="/outils/trade.html" data-tool="trade">Trade</a>
+        <a href="/outils/comparer.html" data-tool="compare">Comparer</a>
+      </nav>
+    </header>
+
+    <main class="shell best-main tools-main">
+      <aside class="promo-slot promo-slot--leader" aria-label="Espace publicitaire">
+        <span class="promo-label">Publicité</span>
+        <div class="promo-frame promo-frame--leader" data-slot="leaderboard">
+          <span class="promo-placeholder">728 × 90</span>
+        </div>
+      </aside>
+
+      <div class="tools-cards">
+        <a class="tools-card" href="/outils/hangar.html">
+          <span class="tools-card-kicker" data-i18n="toolsNavHangar">Mon hangar</span>
+          <strong data-i18n="hangarTitle">Mon hangar</strong>
+          <p data-i18n="hangarLede">Note les vaisseaux que tu possèdes — stocké sur cet appareil.</p>
+        </a>
+        <a class="tools-card" href="/outils/trade.html">
+          <span class="tools-card-kicker" data-i18n="toolsNavTrade">Trade</span>
+          <strong data-i18n="tradeTitle">Rentabilité cargo</strong>
+          <p data-i18n="tradeLede">Estime le profit d’un trip avec les moyennes UEX.</p>
+        </a>
+        <a class="tools-card" href="/outils/comparer.html">
+          <span class="tools-card-kicker" data-i18n="toolsNavCompare">Comparer</span>
+          <strong data-i18n="compareTitle">Comparer 2 vaisseaux</strong>
+          <p data-i18n="compareLede">Prix, cargo, équipage et dealers côte à côte.</p>
+        </a>
+      </div>
+
+      <p class="tools-disclaimer" data-i18n="toolsDisclaimer">
+        Pas d’accès au serveur de jeu ni aux missions live — données publiques et saisie locale uniquement.
+      </p>
+    </main>
+
+    <footer class="site-footer shell">
+      <p id="footer-copy"></p>
+      <p class="footer-links">
+        <a href="/mentions-legales.html" id="link-legal">Mentions légales</a> ·
+        <a href="/confidentialite.html" id="link-privacy">Confidentialité</a>
+      </p>
+    </footer>
+    <script type="module" src="/src/tools-hub.js"></script>
+  </body>
+</html>

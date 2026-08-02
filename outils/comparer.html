@@ -7,26 +7,16 @@
     <script async src="https://fundingchoicesmessages.google.com/i/pub-2598514579769865?ers=1"></script>
     <meta name="google-adsense-account" content="ca-pub-2598514579769865" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meilleurs vaisseaux Star Citizen par catégorie — Hangar Match</title>
+    <title>Comparer 2 vaisseaux Star Citizen — Hangar Match</title>
     <meta
       name="description"
-      content="Classements des meilleurs vaisseaux Star Citizen par activité : cargo, combat, mining, exploration, starter, salvage… Prix aUEC et liens vers le comparateur."
+      content="Compare deux vaisseaux Star Citizen côte à côte : prix aUEC, location, cargo, équipage, taille et dealers."
     />
-    <link rel="canonical" href="https://hangarmatch.org/meilleurs-vaisseaux.html" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://hangarmatch.org/outils/comparer.html" />
+    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#05070c" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
-    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Hangar Match" />
-    <meta property="og:url" content="https://hangarmatch.org/meilleurs-vaisseaux.html" />
-    <meta property="og:title" content="Meilleurs vaisseaux Star Citizen par catégorie" />
-    <meta
-      property="og:description"
-      content="Cargo, combat, mining, exploration… les meilleurs vaisseaux Star Citizen classés, avec prix aUEC."
-    />
-    <meta property="og:image" content="https://hangarmatch.org/icon-512.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,31 +33,44 @@
           <select id="lang"></select>
         </span>
       </div>
-      <h1 class="best-page-title" id="best-hub-title">Meilleurs vaisseaux par catégorie</h1>
-      <p class="lede" id="best-hub-lede">
-        Choisis une activité — on te liste les meilleurs appareils du registre,
-        puis tu affines avec ton budget dans le comparateur.
+      <h1 class="best-page-title" id="tools-title">Comparer 2 vaisseaux</h1>
+      <p class="lede" id="tools-lede">
+        Prix, cargo, équipage et dealers — côte à côte.
       </p>
       <nav class="mode-nav" aria-label="Navigation">
-        <a class="mode-nav-btn" href="/#finder-form" id="nav-compare">Comparateur</a>
-        <a class="mode-nav-btn is-active" href="/meilleurs-vaisseaux.html" id="nav-best" aria-current="page">Meilleurs vaisseaux</a>
-        <a class="mode-nav-btn" href="/outils.html" id="nav-tools">Outils</a>
+        <a class="mode-nav-btn" href="/#finder-form" data-nav="compare" id="nav-compare">Comparateur</a>
+        <a class="mode-nav-btn" href="/meilleurs-vaisseaux.html" data-nav="best" id="nav-best">Meilleurs vaisseaux</a>
+        <a class="mode-nav-btn is-active" href="/outils.html" data-nav="tools" id="nav-tools">Outils</a>
+      </nav>
+      <nav class="tools-subnav" aria-label="Outils">
+        <a href="/outils.html" data-tool="hub">Hub</a>
+        <a href="/outils/hangar.html" data-tool="hangar">Mon hangar<span id="hangar-badge" class="hangar-badge" hidden></span></a>
+        <a href="/outils/trade.html" data-tool="trade">Trade</a>
+        <a href="/outils/comparer.html" data-tool="compare" class="is-active">Comparer</a>
       </nav>
     </header>
 
-    <main class="shell best-main">
+    <main class="shell best-main tools-main">
       <aside class="promo-slot promo-slot--leader" aria-label="Espace publicitaire">
         <span class="promo-label">Publicité</span>
         <div class="promo-frame promo-frame--leader" data-slot="leaderboard">
           <span class="promo-placeholder">728 × 90</span>
         </div>
       </aside>
-      <div id="best-categories" class="cat-grid"></div>
 
-      <section class="seo-guide">
-        <h2 id="best-hub-compare-title">Comparateur ou classement ?</h2>
-        <p id="best-hub-compare-body"></p>
-      </section>
+      <div class="compare-pickers">
+        <div class="field">
+          <label for="compare-a" data-i18n="compareShipA">Vaisseau A</label>
+          <select id="compare-a"></select>
+        </div>
+        <button type="button" class="compare-swap" id="compare-swap" data-i18n="compareSwap" aria-label="Échanger">⇄</button>
+        <div class="field">
+          <label for="compare-b" data-i18n="compareShipB">Vaisseau B</label>
+          <select id="compare-b"></select>
+        </div>
+      </div>
+
+      <div id="compare-table" class="tools-panel"></div>
     </main>
 
     <footer class="site-footer shell">
@@ -77,6 +80,6 @@
         <a href="/confidentialite.html" id="link-privacy">Confidentialité</a>
       </p>
     </footer>
-    <script type="module" src="/src/best-page.js"></script>
+    <script type="module" src="/src/compare.js"></script>
   </body>
 </html>
