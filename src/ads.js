@@ -13,8 +13,8 @@ export const AD_SLOTS = {
   footer: "6650876663", // aperçu bas
   "sky-left": "9485903504", // aperçu côté gauche
   "sky-right": "1398549982", // aperçu côté droit
-  // carrés dans la liste (infeed) : un seul ID Display suffit, réutilisé
-  infeed: "",
+  // carrés dans la liste (infeed) — même ID réutilisé
+  infeed: "7937018118",
 };
 
 const FORMAT_BY_SLOT = {
