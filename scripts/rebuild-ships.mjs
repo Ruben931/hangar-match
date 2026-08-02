@@ -171,7 +171,8 @@ function focusToRoles(focus, type) {
     } else if (type === "industrial") roles.add("mining");
     else if (type === "competition") roles.add("racing");
     else if (type === "support") roles.add("medical");
-    else if (type === "ground") roles.add("multipurpose");
+    else if (String(type || "").toLowerCase() === "ground")
+      roles.add("multipurpose");
     else roles.add("multipurpose");
   }
   // clean luxury detection properly
@@ -180,11 +181,22 @@ function focusToRoles(focus, type) {
   return [...roles];
 }
 
-function mapSize(size, type) {
-  if (type === "ground") return "ground";
+/** rovers / bikes / tanks (RSI type parfois "Ground", parfois mal tagué) */
+const GROUND_NAME_RE =
+  /^(ATLS(?:\s+GEO)?|MTC|PTV|STV|ROC(?:-DS)?|Cyclone(?:-\w+)?|Ursa(?:\s+\w+)?|Lynx|G12[ar]?|Nova|Ballista(?:\s+\w+)?|Anvil Ballista(?:\s+\w+)?|Centurion|Spartan|Storm(?:\s+AA)?|Ranger\s+\w+|Pulse(?:\s+LX)?|X1(?:\s+\w+)?|Nox(?:\s+\w+)?|Dragonfly(?:\s+\w+)?|HoverQuad|Mule|MDC)\b/i;
+
+function isGroundVehicle(name, size, type) {
+  const t = String(type || "").toLowerCase();
+  const s = String(size || "").toLowerCase();
+  if (t === "ground" || s === "ground" || s === "vehicle") return true;
+  return GROUND_NAME_RE.test(name || "");
+}
+
+function mapSize(size, type, name) {
+  if (isGroundVehicle(name, size, type)) return "ground";
   const s = (size || "").toLowerCase();
-  if (["snub", "small", "medium", "large", "capital", "vehicle"].includes(s)) {
-    return s === "vehicle" ? "ground" : s === "snub" ? "small" : s;
+  if (["snub", "small", "medium", "large", "capital"].includes(s)) {
+    return s === "snub" ? "small" : s;
   }
   return "small";
 }
@@ -324,7 +336,8 @@ const ships = matrix.map((s) => {
   const purchase = findPurchase(purchases, s.name);
   const name = displayName(s.name, purchase);
   const roles = focusToRoles(s.focus, s.type);
-  const size = mapSize(s.size, s.type);
+  const ground = isGroundVehicle(name, s.size, s.type);
+  const size = mapSize(s.size, s.type, name);
   const min = s.min_crew || 1;
   const max = s.max_crew || min;
   const crew = min === max ? String(min) : `${min}–${max}`;
@@ -338,7 +351,7 @@ const ships = matrix.map((s) => {
     matrixName: s.name,
     manufacturer: s.manufacturer?.name || "Unknown",
     size,
-    vehicleType: s.type || "multi",
+    vehicleType: ground ? "ground" : s.type || "multi",
     productionStatus: s.production_status || "unknown",
     focus: s.focus || "",
     crew,

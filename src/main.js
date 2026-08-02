@@ -287,8 +287,14 @@ function matchMode(ship, budget, acquire, catalog, system, ignoreBudget) {
   return null;
 }
 
+/** rovers / bikes / tanks — pas des vaisseaux aériens */
+const GROUND_NAME_RE =
+  /^(ATLS(?:\s+GEO)?|MTC|PTV|STV|ROC(?:-DS)?|Cyclone(?:-\w+)?|Ursa(?:\s+\w+)?|Lynx|G12[ar]?|Nova|Ballista(?:\s+\w+)?|Anvil Ballista(?:\s+\w+)?|Centurion|Spartan|Storm(?:\s+AA)?|Ranger\s+\w+|Pulse(?:\s+LX)?|X1(?:\s+\w+)?|Nox(?:\s+\w+)?|Dragonfly(?:\s+\w+)?|HoverQuad|Mule|MDC)\b/i;
+
 function isGround(ship) {
-  return ship.size === "ground" || ship.vehicleType === "ground";
+  if (ship.size === "ground" || ship.size === "vehicle") return true;
+  if (/^ground$/i.test(String(ship.vehicleType || ""))) return true;
+  return GROUND_NAME_RE.test(ship.name || "");
 }
 
 function inDomain(ship, domain) {
