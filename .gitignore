@@ -4,3 +4,5 @@ dist
 *.log
 ship-matrix.json
 scw-ships.json
+.vercel
+.env*

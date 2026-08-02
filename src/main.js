@@ -7,6 +7,12 @@ import {
   t,
 } from "./i18n.js";
 import { detectAdBlock, mountGate, hideGate } from "./adgate.js";
+import {
+  suggestPlaces,
+  resolvePlace,
+  findPlaceById,
+  shipDistanceToPlace,
+} from "./places.js";
 
 const SIZE_LABELS = {
   small: "Small",
@@ -37,6 +43,9 @@ const budgetInput = document.querySelector("#budget");
 const budgetRange = document.querySelector("#budget-range");
 const queryInput = document.querySelector("#query");
 const queryClear = document.querySelector("#query-clear");
+const placeInput = document.querySelector("#place");
+const placeClear = document.querySelector("#place-clear");
+const placeSuggest = document.querySelector("#place-suggest");
 const roleGrid = document.querySelector("#role-grid");
 const systemSelect = document.querySelector("#starsystem");
 const sizeSelect = document.querySelector("#size");
@@ -50,6 +59,9 @@ const resultsCount = document.querySelector("#results-count");
 
 let ships = [];
 let hasSearched = false;
+/** @type {import('./places.js').PLACES[number] | null} */
+let selectedPlace = null;
+let placeActiveIndex = -1;
 
 function formatAuec(n) {
   return new Intl.NumberFormat(localeOf()).format(n) + " aUEC";
@@ -77,6 +89,55 @@ function matchesQuery(ship, q) {
 
 function syncQueryClear() {
   if (queryClear) queryClear.hidden = !queryInput.value;
+}
+
+function syncPlaceClear() {
+  if (placeClear) placeClear.hidden = !placeInput.value;
+}
+
+function hidePlaceSuggest() {
+  if (!placeSuggest) return;
+  placeSuggest.hidden = true;
+  placeSuggest.innerHTML = "";
+  placeActiveIndex = -1;
+  placeInput?.setAttribute("aria-expanded", "false");
+}
+
+function renderPlaceSuggest(list) {
+  if (!placeSuggest) return;
+  if (!list.length) {
+    hidePlaceSuggest();
+    return;
+  }
+  placeSuggest.innerHTML = list
+    .map(
+      (p, i) => `
+      <li role="option" data-id="${p.id}" class="${i === placeActiveIndex ? "active" : ""}" id="place-opt-${i}">
+        <b>${p.label}</b>
+        <span>${p.subtitle}</span>
+      </li>`
+    )
+    .join("");
+  placeSuggest.hidden = false;
+  placeInput.setAttribute("aria-expanded", "true");
+}
+
+function pickPlace(place) {
+  selectedPlace = place;
+  placeInput.value = place ? place.label : "";
+  syncPlaceClear();
+  hidePlaceSuggest();
+  if (place && systemSelect) {
+    systemSelect.value = place.system;
+  }
+  if (hasSearched) render();
+}
+
+function distanceLabel(d) {
+  if (d === 0) return t("nearHere");
+  if (d === 1) return t("samePlanet");
+  if (d === 2) return t("sameSystem");
+  return t("farAway");
 }
 
 function syncBudget(fromRange) {
@@ -204,14 +265,18 @@ function filterShips() {
   const system = systemSelect.value;
   const q = queryInput.value.trim();
   const byName = Boolean(q);
+  const place = selectedPlace;
 
   let list = ships
     .map((ship) => {
       const mode = matchMode(ship, budget, acquire, catalog, system, byName);
+      const buyLocs = buyLocationsIn(ship, system);
+      const rentLocs = rentLocationsIn(ship, system);
       return {
         ...ship,
         score: matchScore(ship, roles),
         matchAcquire: mode,
+        distance: shipDistanceToPlace(ship, place, buyLocs, rentLocs),
       };
     })
     .filter((ship) => matchesQuery(ship, q))
@@ -223,6 +288,11 @@ function filterShips() {
 
   const sort = sortSelect.value;
   list.sort((a, b) => {
+    // Position choisie : les plus proches d'abord
+    if (place) {
+      const dd = a.distance - b.distance;
+      if (dd !== 0) return dd;
+    }
     // Recherche nom : priorité au match exact / début de nom
     if (byName) {
       const nq = normalizeText(q);
@@ -396,6 +466,9 @@ function renderShipCard(ship, index) {
     isGround(ship)
       ? `<span class="tag mode ground">${t("tagGround")}</span>`
       : `<span class="tag mode air">${t("tagAir")}</span>`,
+    selectedPlace && typeof ship.distance === "number" && ship.distance < 9
+      ? `<span class="tag mode near d${ship.distance}">${distanceLabel(ship.distance)}</span>`
+      : "",
     canBuyIn(ship, system) && shipBestPrice != null && shipBestPrice <= budget
       ? `<span class="tag mode buy">${t("tagBuyOk")}</span>`
       : "",
@@ -540,6 +613,10 @@ function applyI18n() {
 
   setText('label[for="budget"]', "budgetLabel");
   budgetRange.setAttribute("aria-label", t("budgetLabel"));
+  setText('label[for="place"]', "placeLabel");
+  if (placeInput) placeInput.placeholder = t("placePlaceholder");
+  if (placeClear) placeClear.setAttribute("aria-label", t("placeClear"));
+  setText(".place-hint", "placeHint");
   setText('label[for="starsystem"]', "sysLabel");
   setText('label[for="catalog"]', "catLabel");
   setText('label[for="domain"]', "domLabel");
@@ -673,9 +750,78 @@ async function init() {
     if (hasSearched) render();
   });
 
+  placeInput?.addEventListener("input", () => {
+    selectedPlace = null;
+    syncPlaceClear();
+    const list = suggestPlaces(placeInput.value);
+    placeActiveIndex = list.length ? 0 : -1;
+    renderPlaceSuggest(list);
+  });
+
+  placeInput?.addEventListener("keydown", (e) => {
+    const items = [...(placeSuggest?.querySelectorAll("[data-id]") || [])];
+    if (!items.length && e.key !== "Escape") return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      placeActiveIndex = Math.min(placeActiveIndex + 1, items.length - 1);
+      renderPlaceSuggest(suggestPlaces(placeInput.value));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      placeActiveIndex = Math.max(placeActiveIndex - 1, 0);
+      renderPlaceSuggest(suggestPlaces(placeInput.value));
+    } else if (e.key === "Enter") {
+      const active = items[placeActiveIndex] || items[0];
+      if (active && !placeSuggest.hidden) {
+        e.preventDefault();
+        pickPlace(findPlaceById(active.dataset.id));
+      } else {
+        const resolved = resolvePlace(placeInput.value);
+        if (resolved) {
+          e.preventDefault();
+          pickPlace(resolved);
+        }
+      }
+    } else if (e.key === "Escape") {
+      hidePlaceSuggest();
+    }
+  });
+
+  placeSuggest?.addEventListener("mousedown", (e) => {
+    const li = e.target.closest("[data-id]");
+    if (!li) return;
+    e.preventDefault();
+    pickPlace(findPlaceById(li.dataset.id));
+  });
+
+  placeInput?.addEventListener("blur", () => {
+    setTimeout(() => {
+      hidePlaceSuggest();
+      if (!selectedPlace && placeInput.value.trim()) {
+        const resolved = resolvePlace(placeInput.value);
+        if (resolved) pickPlace(resolved);
+      }
+    }, 120);
+  });
+
+  placeInput?.addEventListener("focus", () => {
+    const list = suggestPlaces(placeInput.value);
+    placeActiveIndex = list.length ? 0 : -1;
+    renderPlaceSuggest(list);
+  });
+
+  placeClear?.addEventListener("click", () => {
+    pickPlace(null);
+    placeInput.focus();
+  });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (document.documentElement.classList.contains("gate-locked")) return;
+    if (!selectedPlace && placeInput?.value.trim()) {
+      const resolved = resolvePlace(placeInput.value);
+      if (resolved) pickPlace(resolved);
+    }
     hasSearched = true;
     render();
     document.querySelector(".results-wrap")?.scrollIntoView({

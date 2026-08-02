@@ -211,9 +211,34 @@
             </div>
           </div>
 
+          <div class="place-block">
+            <label for="place">03 — Ta position</label>
+            <div class="place-line">
+              <input
+                id="place"
+                name="place"
+                type="text"
+                placeholder="Lorville, Area18, Orison…"
+                autocomplete="off"
+                spellcheck="false"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded="false"
+                aria-controls="place-suggest"
+              />
+              <button type="button" class="place-clear" id="place-clear" hidden aria-label="Effacer la position">
+                ×
+              </button>
+            </div>
+            <ul class="place-suggest" id="place-suggest" role="listbox" hidden></ul>
+            <p class="place-hint">
+              Tape une lettre pour les suggestions. Les vaisseaux les plus proches s’affichent en premier.
+            </p>
+          </div>
+
           <div class="finder-grid">
             <div class="field">
-              <label for="starsystem">03 — Système</label>
+              <label for="starsystem">04 — Système</label>
               <select id="starsystem" name="starsystem">
                 <option value="all" selected>Tous les systèmes</option>
                 <option value="stanton">Stanton</option>
@@ -223,7 +248,7 @@
             </div>
 
             <div class="field">
-              <label for="catalog">04 — Catalogue</label>
+              <label for="catalog">05 — Catalogue</label>
               <select id="catalog" name="catalog">
                 <option value="ingame" selected>Achetables aUEC</option>
                 <option value="flight">Tous flight-ready</option>
@@ -232,7 +257,7 @@
             </div>
 
             <div class="field">
-              <label for="domain">05 — Domaine</label>
+              <label for="domain">06 — Domaine</label>
               <select id="domain" name="domain">
                 <option value="both" selected>Terrestre + aérien</option>
                 <option value="air">Aérien seulement</option>
@@ -241,7 +266,7 @@
             </div>
 
             <div class="field">
-              <label for="size">06 — Gabarit</label>
+              <label for="size">07 — Gabarit</label>
               <select id="size" name="size">
                 <option value="any">Tous</option>
                 <option value="small">Small / Snub</option>
@@ -253,7 +278,7 @@
             </div>
 
             <div class="field">
-              <label for="acquire">07 — Mode</label>
+              <label for="acquire">08 — Mode</label>
               <select id="acquire" name="acquire">
                 <option value="buy" selected>Achat</option>
                 <option value="rent">Location</option>
@@ -262,7 +287,7 @@
             </div>
 
             <div class="field">
-              <label for="sort">08 — Tri</label>
+              <label for="sort">09 — Tri</label>
               <select id="sort" name="sort">
                 <option value="match">Compatibilité</option>
                 <option value="price-asc">Prix croissant</option>
@@ -273,7 +298,7 @@
           </div>
 
           <fieldset class="roles">
-            <legend>09 — Programme de vol</legend>
+            <legend>10 — Programme de vol</legend>
             <div class="role-grid" id="role-grid"></div>
           </fieldset>
 

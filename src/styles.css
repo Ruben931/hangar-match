@@ -305,6 +305,138 @@ legend {
   background: var(--yellow);
 }
 
+.place-block {
+  position: relative;
+  padding-bottom: 1.4rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.place-line {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 40rem;
+  border-bottom: 3px solid var(--ink);
+  padding-bottom: 0.2rem;
+}
+
+#place {
+  flex: 1;
+  min-width: 0;
+  padding: 0.2rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1.15rem, 3vw, 1.55rem);
+  font-weight: 600;
+}
+
+#place::placeholder {
+  color: rgba(76, 68, 60, 0.45);
+  font-weight: 500;
+}
+
+#place:focus {
+  outline: none;
+  background: rgba(242, 194, 22, 0.35);
+}
+
+.place-clear {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.place-clear:hover {
+  background: var(--yellow);
+}
+
+.place-suggest {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 1.1rem);
+  z-index: 30;
+  max-width: 40rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 3px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 6px 6px 0 var(--ink);
+  max-height: 16rem;
+  overflow: auto;
+}
+
+.place-suggest[hidden] {
+  display: none !important;
+}
+
+.place-suggest li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(23, 19, 16, 0.12);
+}
+
+.place-suggest li:last-child {
+  border-bottom: 0;
+}
+
+.place-suggest li:hover,
+.place-suggest li.active {
+  background: var(--yellow);
+}
+
+.place-suggest b {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.place-suggest span {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.place-hint {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.tag.mode.near {
+  background: var(--stamp-blue);
+  color: #fff;
+}
+
+.tag.mode.near.d0 {
+  background: var(--red);
+}
+
+.tag.mode.near.d1 {
+  background: var(--stamp-blue);
+}
+
+.tag.mode.near.d2 {
+  background: var(--ink-soft);
+}
+
 .query-hint {
   margin: 0.45rem 0 0;
   font-size: 0.8rem;
