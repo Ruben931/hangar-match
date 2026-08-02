@@ -10,10 +10,11 @@ export const AD_CLIENT = "ca-pub-2598514579769865";
 /** ID par emplacement (data-slot sur le HTML) */
 export const AD_SLOTS = {
   leaderboard: "7963958332", // aperçu haut
-  footer: "",
+  footer: "6650876663", // aperçu bas
   "sky-left": "",
   "sky-right": "",
-  // infeed-1, infeed-2… : laisse vide ou mets un ID Display
+  // carrés dans la liste (infeed) : un seul ID Display suffit, réutilisé
+  infeed: "",
 };
 
 const FORMAT_BY_SLOT = {
