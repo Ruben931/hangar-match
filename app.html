@@ -32,6 +32,19 @@
       <span class="app-teaser-cta" id="app-teaser-cta-bar">Sur cette page ↓</span>
     </a>
 
+
+    <aside class="promo-rail promo-rail--left" aria-label="Espace publicitaire">
+      <span class="promo-label">Publicité</span>
+      <div class="promo-frame promo-frame--sky" data-slot="sky-left">
+        <span class="promo-placeholder">160 × 600<br />skyscraper</span>
+      </div>
+    </aside>
+    <aside class="promo-rail promo-rail--right" aria-label="Espace publicitaire">
+      <span class="promo-label">Publicité</span>
+      <div class="promo-frame promo-frame--sky" data-slot="sky-right">
+        <span class="promo-placeholder">160 × 600<br />skyscraper</span>
+      </div>
+    </aside>
     <header class="masthead shell">
       <div class="masthead-top">
         <span class="lang-pick">
@@ -55,7 +68,7 @@
       <aside class="promo-slot promo-slot--leader" aria-label="Espace publicitaire">
         <span class="promo-label">Publicité</span>
         <div class="promo-frame promo-frame--leader" data-slot="leaderboard">
-          <span class="promo-placeholder">728 × 90</span>
+          <span class="promo-placeholder">728 × 90 — bandeau</span>
         </div>
       </aside>
 
@@ -95,6 +108,15 @@
       </p>
     </main>
 
+    
+      <aside class="promo-slot promo-slot--footer" aria-label="Espace publicitaire">
+        <span class="promo-label">Publicité</span>
+        <div class="promo-frame promo-frame--leader" data-slot="footer">
+          <span class="promo-placeholder">728 × 90 — bandeau bas</span>
+        </div>
+      </aside>
+
+
     <footer class="site-footer shell">
       <p id="footer-copy"></p>
       <p class="footer-links">
@@ -133,6 +155,7 @@
       set("#app-teaser-title-bar", "appTeaserTitle");
       set("#app-teaser-text", "appTeaserText");
       set("#app-teaser-text-bar", "appTeaserText");
+      set("#app-teaser-cta", "appTeaserCta");
       set("#app-teaser-cta-bar", "appTeaserCta");
       set("#teaser-hero-title", "appTeaserHeroTitle");
       set("#teaser-hero-text", "appTeaserHeroText");
@@ -150,6 +173,12 @@
       set("#app-disclaimer", "appDisclaimer");
       set("#link-legal", "linkLegal");
       set("#link-privacy", "linkPrivacy");
+      document.querySelectorAll(".promo-label").forEach((el) => {
+        el.textContent = t("adLabel");
+      });
+      document.querySelectorAll(".app-teaser-stamp").forEach((el) => {
+        el.textContent = t("appTeaserStamp");
+      });
       const foot = document.querySelector("#footer-copy");
       if (foot) foot.innerHTML = t("footer");
       document.title = `${t("appPageTitle")} — ${t("appTeaserStamp")}`;

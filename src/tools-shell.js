@@ -72,9 +72,28 @@ export function applyToolsChrome(active) {
   setText("#link-legal", "linkLegal");
   setText("#link-privacy", "linkPrivacy");
   setText(".promo-label", "adLabel");
+  setText("#app-teaser-stamp", "appTeaserStamp");
+  setText("#app-teaser-title", "appTeaserTitle");
+  setText("#app-teaser-text", "appTeaserText");
+  setText("#app-teaser-cta", "appTeaserCta");
 
   const footer = document.querySelector("#footer-copy");
   if (footer) footer.innerHTML = t("footer");
+
+  const ph = (sel, key) => {
+    document.querySelectorAll(sel).forEach((el) => {
+      if (el.closest(".promo-frame")?.dataset.adMounted === "1") return;
+      el.innerHTML = t(key);
+    });
+  };
+  ph('[data-slot="leaderboard"] .promo-placeholder', "adTop");
+  ph('[data-slot="footer"] .promo-placeholder', "adBottom");
+  ph('[data-slot="sky-left"] .promo-placeholder', "adSky");
+  ph('[data-slot="sky-right"] .promo-placeholder', "adSky");
+
+  document.querySelectorAll(".promo-slot, .promo-rail").forEach((el) => {
+    el.setAttribute("aria-label", t("adLabel"));
+  });
 
   document.querySelectorAll(".mode-nav-btn").forEach((a) => {
     a.classList.toggle("is-active", a.dataset.nav === active);

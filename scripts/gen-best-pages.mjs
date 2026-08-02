@@ -6,6 +6,11 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { CATEGORIES } from "../src/categories.js";
+import {
+  TEASER_HTML,
+  AD_RAILS_HTML,
+  AD_FOOTER_HTML,
+} from "./page-chrome.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -45,6 +50,8 @@ const template = (cat) => `<!DOCTYPE html>
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body data-role="${cat.role}" data-slug="${cat.slug}">
+${TEASER_HTML}
+${AD_RAILS_HTML}
     <header class="masthead shell">
       <div class="masthead-top">
         <span id="registry-line">Registre : <b id="db-count">—</b></span>
@@ -70,7 +77,7 @@ const template = (cat) => `<!DOCTYPE html>
       <aside class="promo-slot promo-slot--leader" aria-label="Espace publicitaire">
         <span class="promo-label">Publicité</span>
         <div class="promo-frame promo-frame--leader" data-slot="leaderboard">
-          <span class="promo-placeholder">728 × 90</span>
+          <span class="promo-placeholder">728 × 90 — bandeau</span>
         </div>
       </aside>
       <div class="best-toolbar">
@@ -85,6 +92,7 @@ const template = (cat) => `<!DOCTYPE html>
       </section>
     </main>
 
+${AD_FOOTER_HTML}
     <footer class="site-footer shell">
       <p id="footer-copy"></p>
       <p class="footer-links">
