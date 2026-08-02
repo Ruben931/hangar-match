@@ -1220,14 +1220,21 @@ select:focus {
 
 .promo-frame--leader {
   min-height: 90px;
+}
+
+.promo-frame--leader:not(.promo-frame--live) {
   aspect-ratio: 728 / 90;
   max-height: 120px;
 }
 
 .promo-frame--rect {
   max-width: 336px;
-  min-height: 280px;
+  min-height: 250px;
+}
+
+.promo-frame--rect:not(.promo-frame--live) {
   aspect-ratio: 336 / 280;
+  min-height: 280px;
 }
 
 /* Rails latéraux fixes : suivent le scroll */
@@ -1271,13 +1278,33 @@ select:focus {
 }
 
 .promo-frame--live {
+  /* AdSense choisit la hauteur (souvent ~250–280px) — ne pas la clipper */
+  display: block;
+  aspect-ratio: auto;
+  max-height: none;
   border-style: solid;
   border-color: rgba(23, 19, 16, 0.25);
   background: var(--paper-dark);
+  overflow: visible;
 }
 
-.promo-frame--live:has(iframe) {
+.promo-frame--live .promo-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.promo-frame--filled {
   background: var(--paper);
+  border-style: solid;
+  border-color: rgba(23, 19, 16, 0.2);
+}
+
+.promo-frame--filled .promo-placeholder {
+  display: none;
 }
 
 .promo-frame > ins.adsbygoogle,
@@ -1286,6 +1313,8 @@ select:focus {
   width: 100% !important;
   margin: 0 auto;
   max-width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 /* ---------- Anti-adblock gate ---------- */

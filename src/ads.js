@@ -1,8 +1,6 @@
 /**
  * Google AdSense — pubs uniquement dans TES emplacements (.promo-frame).
  * Pas d’Auto ads page-level.
- *
- * Ajoute d’autres IDs quand tu crées des unités (bas, côtés, feed…).
  */
 
 export const AD_CLIENT = "ca-pub-2598514579769865";
@@ -17,26 +15,58 @@ export const AD_SLOTS = {
   infeed: "7937018118",
 };
 
-const FORMAT_BY_SLOT = {
-  leaderboard: { format: "auto", minHeight: "90px" },
-  footer: { format: "auto", minHeight: "90px" },
-  "sky-left": { format: "vertical", minHeight: "600px" },
-  "sky-right": { format: "vertical", minHeight: "600px" },
+/** min-height de réserve (le format reste "auto" comme le snippet AdSense) */
+const MIN_H_BY_SLOT = {
+  leaderboard: "90px",
+  footer: "90px",
+  "sky-left": "600px",
+  "sky-right": "600px",
 };
 
 function slotIdFor(name) {
   if (AD_SLOTS[name]) return AD_SLOTS[name];
   if (name && String(name).startsWith("infeed")) {
-    return AD_SLOTS.infeed || AD_SLOTS.feed || "";
+    return AD_SLOTS.infeed || "";
   }
   return "";
 }
 
-function formatFor(name) {
-  if (name && String(name).startsWith("infeed")) {
-    return { format: "rectangle", minHeight: "280px" };
+function minHeightFor(name) {
+  if (name && String(name).startsWith("infeed")) return "250px";
+  return MIN_H_BY_SLOT[name] || "90px";
+}
+
+function pushAd(ins) {
+  try {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  } catch {
+    /* ignore */
   }
-  return FORMAT_BY_SLOT[name] || { format: "auto", minHeight: "100px" };
+}
+
+function whenAdsReady(cb) {
+  if (window.adsbygoogle && !Array.isArray(window.adsbygoogle)) {
+    cb();
+    return;
+  }
+  const existing = document.querySelector('script[src*="adsbygoogle.js"]');
+  if (!existing) {
+    cb();
+    return;
+  }
+  let done = false;
+  const run = () => {
+    if (done) return;
+    done = true;
+    cb();
+  };
+  existing.addEventListener("load", run, { once: true });
+  // déjà chargé / cache
+  if (existing.dataset.loaded === "1" || existing.getAttribute("data-nscript")) {
+    run();
+  }
+  // filet de sécurité
+  setTimeout(run, 2500);
 }
 
 function mountFrame(frame) {
@@ -48,42 +78,47 @@ function mountFrame(frame) {
 
   frame.dataset.adMounted = "1";
 
-  const { format, minHeight } = formatFor(name);
   const placeholder = frame.querySelector(".promo-placeholder");
 
   const ins = document.createElement("ins");
   ins.className = "adsbygoogle";
   ins.style.display = "block";
-  ins.style.minHeight = minHeight;
+  ins.style.minHeight = minHeightFor(name);
   ins.style.width = "100%";
   ins.setAttribute("data-ad-client", AD_CLIENT);
   ins.setAttribute("data-ad-slot", slotId);
-  ins.setAttribute("data-ad-format", format);
+  // même attributs que « Obtenir le code » AdSense
+  ins.setAttribute("data-ad-format", "auto");
   ins.setAttribute("data-full-width-responsive", "true");
   frame.appendChild(ins);
   frame.classList.add("promo-frame--live");
 
-  try {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  } catch {
-    return;
-  }
+  whenAdsReady(() => pushAd(ins));
 
   const reveal = () => {
     const status = ins.getAttribute("data-ad-status");
     const iframe = frame.querySelector("iframe");
     if (status === "filled" || (iframe && iframe.offsetHeight > 20)) {
       placeholder?.remove();
+      frame.classList.add("promo-frame--filled");
+      return true;
     }
+    if (status === "unfilled") {
+      // Google a répondu « pas de pub » — garder le placeholder
+      return true;
+    }
+    return false;
   };
 
-  const mo = new MutationObserver(reveal);
+  const mo = new MutationObserver(() => {
+    if (reveal()) mo.disconnect();
+  });
   mo.observe(ins, { attributes: true, attributeFilter: ["data-ad-status"] });
   mo.observe(frame, { childList: true, subtree: true });
   setTimeout(() => {
     reveal();
     mo.disconnect();
-  }, 5000);
+  }, 8000);
 }
 
 export function mountAds(root = document) {
