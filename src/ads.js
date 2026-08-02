@@ -1,9 +1,8 @@
 /**
- * Google AdSense — Auto ads page-level + unités dans les .promo-frame
- * Client : ca-pub-2598514579769865
- *
- * Optionnel : VITE_ADSENSE_SLOT=ton_id_unite dans .env
- * (AdSense → Annonces → Par unité → Display responsive)
+ * Google AdSense
+ * - Auto ads page-level (pas de cadres vides)
+ * - Unités display dans .promo-frame seulement si AD_SLOT est défini
+ *   et seulement si Google remplit vraiment l’annonce
  */
 
 export const AD_CLIENT = "ca-pub-2598514579769865";
@@ -26,6 +25,24 @@ function formatFor(name) {
   return FORMAT_BY_SLOT[name] || { format: "auto", minHeight: "100px" };
 }
 
+function wrapOf(frame) {
+  return frame.closest(".promo-slot, .promo-rail") || frame;
+}
+
+function hideWrap(frame) {
+  const wrap = wrapOf(frame);
+  wrap.hidden = true;
+  wrap.setAttribute("aria-hidden", "true");
+  wrap.classList.add("promo-empty");
+}
+
+function showWrap(frame) {
+  const wrap = wrapOf(frame);
+  wrap.hidden = false;
+  wrap.removeAttribute("aria-hidden");
+  wrap.classList.remove("promo-empty");
+}
+
 function ensurePageLevelAds() {
   window.adsbygoogle = window.adsbygoogle || [];
   if (window.__hmPageAds) return;
@@ -41,15 +58,64 @@ function ensurePageLevelAds() {
   }
 }
 
+function watchFill(frame, ins) {
+  const done = (ok) => {
+    if (ok) showWrap(frame);
+    else hideWrap(frame);
+  };
+
+  // AdSense pose data-ad-status="filled" | "unfilled"
+  const check = () => {
+    const status = ins.getAttribute("data-ad-status");
+    if (status === "filled") {
+      done(true);
+      return true;
+    }
+    if (status === "unfilled") {
+      done(false);
+      return true;
+    }
+    // iframe présent avec taille réelle
+    const iframe = frame.querySelector("iframe");
+    if (iframe && iframe.offsetHeight > 20) {
+      done(true);
+      return true;
+    }
+    return false;
+  };
+
+  if (check()) return;
+
+  const mo = new MutationObserver(() => {
+    if (check()) mo.disconnect();
+  });
+  mo.observe(ins, { attributes: true, attributeFilter: ["data-ad-status"] });
+  mo.observe(frame, { childList: true, subtree: true });
+
+  // timeout : pas de pub → on cache le rectangle blanc
+  setTimeout(() => {
+    mo.disconnect();
+    if (!check()) done(false);
+  }, 4000);
+}
+
 function mountFrame(frame) {
   if (!frame || frame.dataset.adMounted === "1") return;
   frame.dataset.adMounted = "1";
+
+  // Sans ID d’unité : on cache les cadres (Auto ads page-level suffit)
+  if (!AD_SLOT) {
+    hideWrap(frame);
+    return;
+  }
 
   const name = frame.getAttribute("data-slot") || "auto";
   const { format, minHeight } = formatFor(name);
 
   frame.querySelector(".promo-placeholder")?.remove();
   frame.classList.add("promo-frame--live");
+  // caché jusqu’à ce qu’une vraie pub arrive
+  hideWrap(frame);
 
   const ins = document.createElement("ins");
   ins.className = "adsbygoogle";
@@ -57,7 +123,7 @@ function mountFrame(frame) {
   ins.style.minHeight = minHeight;
   ins.style.width = "100%";
   ins.setAttribute("data-ad-client", AD_CLIENT);
-  if (AD_SLOT) ins.setAttribute("data-ad-slot", AD_SLOT);
+  ins.setAttribute("data-ad-slot", AD_SLOT);
   ins.setAttribute(
     "data-ad-format",
     format === "horizontal" || format === "vertical" || format === "rectangle"
@@ -70,8 +136,11 @@ function mountFrame(frame) {
   try {
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   } catch {
-    /* ignore */
+    hideWrap(frame);
+    return;
   }
+
+  watchFill(frame, ins);
 }
 
 export function mountAds(root = document) {

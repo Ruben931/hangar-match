@@ -1270,11 +1270,15 @@ select:focus {
   opacity: 0.75;
 }
 
-/* Conteneur AdSense live */
+/* Conteneur AdSense live — masqué tant qu’aucune pub n’est servie */
+.promo-empty {
+  display: none !important;
+}
+
 .promo-frame--live {
   border-style: solid;
   border-color: rgba(23, 19, 16, 0.2);
-  background: var(--paper);
+  background: transparent;
 }
 
 .promo-frame > ins.adsbygoogle,
