@@ -312,7 +312,23 @@
             </div>
 
             <div class="field">
-              <label for="acquire">08 — Mode</label>
+              <label for="cargo">08 — Soute (SCU)</label>
+              <select id="cargo" name="cargo">
+                <option value="any" selected>Toutes</option>
+                <option value="4" data-scu="4">≥ 4 SCU</option>
+                <option value="8" data-scu="8">≥ 8 SCU</option>
+                <option value="16" data-scu="16">≥ 16 SCU</option>
+                <option value="32" data-scu="32">≥ 32 SCU</option>
+                <option value="64" data-scu="64">≥ 64 SCU</option>
+                <option value="128" data-scu="128">≥ 128 SCU</option>
+                <option value="256" data-scu="256">≥ 256 SCU</option>
+                <option value="512" data-scu="512">≥ 512 SCU</option>
+                <option value="1024" data-scu="1024">≥ 1024 SCU</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="acquire">09 — Mode</label>
               <select id="acquire" name="acquire">
                 <option value="buy" selected>Achat</option>
                 <option value="rent">Location</option>
@@ -321,7 +337,7 @@
             </div>
 
             <div class="field">
-              <label for="sort">09 — Tri</label>
+              <label for="sort">10 — Tri</label>
               <select id="sort" name="sort">
                 <option value="match">Compatibilité</option>
                 <option value="price-asc">Prix croissant</option>
@@ -332,7 +348,7 @@
           </div>
 
           <fieldset class="roles">
-            <legend>10 — Programme de vol</legend>
+            <legend>11 — Programme de vol</legend>
             <div class="role-grid" id="role-grid"></div>
           </fieldset>
 

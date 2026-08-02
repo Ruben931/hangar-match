@@ -31,6 +31,12 @@ export const EXTRA_KEYS = {
       "Die Seiten «beste Schiffe» zeigen Tops pro Aktivität. Der <a href=\"/#finder-form\">Hangar-Match-Vergleich</a> filtert nach Budget, System, Standort und Kauf/Miete.",
     placeStations: "Orbital stations / Refinery",
     placeStationsSub: "Rental partners · Stanton+",
+    acqLabel: "09 — Modus",
+    sortLabel: "10 — Sortierung",
+    rolesLegend: "11 — Flugprogramm",
+    cargoLabel: "08 — Laderaum (SCU)",
+    cargoAny: "Alle",
+    cargoMin: "≥ {n} SCU",
   },
   es: {
     navHome: "Inicio",
@@ -62,6 +68,12 @@ export const EXTRA_KEYS = {
       "Las páginas de «mejores naves» dan un top por actividad. El <a href=\"/#finder-form\">comparador Hangar Match</a> filtra por presupuesto, sistema, ubicación y compra/alquiler.",
     placeStations: "Estaciones / Refinería",
     placeStationsSub: "Partners de alquiler · Stanton+",
+    acqLabel: "09 — Modo",
+    sortLabel: "10 — Orden",
+    rolesLegend: "11 — Programa de vuelo",
+    cargoLabel: "08 — Bodega (SCU)",
+    cargoAny: "Todas",
+    cargoMin: "≥ {n} SCU",
   },
   it: {
     navHome: "Home",
@@ -93,6 +105,12 @@ export const EXTRA_KEYS = {
       "Le pagine «migliori navi» mostrano un top per attività. Il <a href=\"/#finder-form\">comparatore Hangar Match</a> filtra per budget, sistema, posizione e acquisto/noleggio.",
     placeStations: "Stazioni / Raffineria",
     placeStationsSub: "Partner noleggio · Stanton+",
+    acqLabel: "09 — Modalità",
+    sortLabel: "10 — Ordinamento",
+    rolesLegend: "11 — Programma di volo",
+    cargoLabel: "08 — Stiva (SCU)",
+    cargoAny: "Tutte",
+    cargoMin: "≥ {n} SCU",
   },
   pt: {
     navHome: "Início",
@@ -124,6 +142,12 @@ export const EXTRA_KEYS = {
       "As páginas de «melhores naves» mostram um top por atividade. O <a href=\"/#finder-form\">comparador Hangar Match</a> filtra por orçamento, sistema, localização e compra/aluguel.",
     placeStations: "Estações / Refinaria",
     placeStationsSub: "Parceiros de aluguel · Stanton+",
+    acqLabel: "09 — Modo",
+    sortLabel: "10 — Ordenar",
+    rolesLegend: "11 — Programa de voo",
+    cargoLabel: "08 — Porão (SCU)",
+    cargoAny: "Todos",
+    cargoMin: "≥ {n} SCU",
   },
   pl: {
     navHome: "Start",
@@ -155,6 +179,12 @@ export const EXTRA_KEYS = {
       "Strony «najlepsze statki» dają top według aktywności. <a href=\"/#finder-form\">Porównywarka Hangar Match</a> filtruje po budżecie, systemie, lokalizacji i kupnie/wynajmie.",
     placeStations: "Stacje / Rafineria",
     placeStationsSub: "Partnerzy wynajmu · Stanton+",
+    acqLabel: "09 — Tryb",
+    sortLabel: "10 — Sortowanie",
+    rolesLegend: "11 — Program lotów",
+    cargoLabel: "08 — Ładownia (SCU)",
+    cargoAny: "Wszystkie",
+    cargoMin: "≥ {n} SCU",
   },
 };
 
@@ -349,6 +379,12 @@ export const FR_EXTRA = {
     "Les pages « meilleurs vaisseaux » te donnent un top par activité (cargo, combat, mining…). Le <a href=\"/#finder-form\">comparateur Hangar Match</a> laisse filtrer par budget aUEC, système, position et mode achat / location.",
   placeStations: "Stations / Refinery",
   placeStationsSub: "Partenaires location · Stanton+",
+  acqLabel: "09 — Mode",
+  sortLabel: "10 — Tri",
+  rolesLegend: "11 — Programme de vol",
+  cargoLabel: "08 — Soute (SCU)",
+  cargoAny: "Toutes",
+  cargoMin: "≥ {n} SCU",
 };
 
 export const EN_EXTRA = {
@@ -364,6 +400,12 @@ export const EN_EXTRA = {
     "“Best ships” pages give a top list per activity. The <a href=\"/#finder-form\">Hangar Match comparator</a> lets you filter by aUEC budget, system, location and buy/rent mode.",
   placeStations: "Stations / Refinery",
   placeStationsSub: "Rental partners · Stanton+",
+  acqLabel: "09 — Mode",
+  sortLabel: "10 — Sort",
+  rolesLegend: "11 — Flight program",
+  cargoLabel: "08 — Cargo (SCU)",
+  cargoAny: "Any",
+  cargoMin: "≥ {n} SCU",
 };
 
 /** 简体中文 */
@@ -515,6 +557,12 @@ export const ZH = {
     "「最佳飞船」页面按活动给出榜单。<a href=\"/#finder-form\">Hangar Match 对比工具</a>可按预算、星系、位置与购买/租赁筛选。",
   placeStations: "空间站 / 精炼",
   placeStationsSub: "租赁合作方 · Stanton+",
+  acqLabel: "09 — 方式",
+  sortLabel: "10 — 排序",
+  rolesLegend: "11 — 飞行任务",
+  cargoLabel: "08 — 货舱 (SCU)",
+  cargoAny: "全部",
+  cargoMin: "≥ {n} SCU",
 };
 
 /** 日本語 */
@@ -667,4 +715,10 @@ export const JA = {
     "「おすすめ艦船」ページは活動ごとのトップを示します。<a href=\"/#finder-form\">Hangar Match 比較ツール</a>では予算・星系・位置・購入/レンタルで絞り込めます。",
   placeStations: "ステーション / 精錬",
   placeStationsSub: "レンタル提携 · Stanton+",
+  acqLabel: "09 — 方式",
+  sortLabel: "10 — 並び替え",
+  rolesLegend: "11 — フライトプログラム",
+  cargoLabel: "08 — 貨物 (SCU)",
+  cargoAny: "すべて",
+  cargoMin: "≥ {n} SCU",
 };

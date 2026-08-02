@@ -55,6 +55,7 @@ const placeSuggest = document.querySelector("#place-suggest");
 const roleGrid = document.querySelector("#role-grid");
 const systemSelect = document.querySelector("#starsystem");
 const sizeSelect = document.querySelector("#size");
+const cargoSelect = document.querySelector("#cargo");
 const domainSelect = document.querySelector("#domain");
 const catalogSelect = document.querySelector("#catalog");
 const acquireSelect = document.querySelector("#acquire");
@@ -334,6 +335,10 @@ function filterShips() {
   const budget = Number(budgetInput.value) || 0;
   const roles = selectedRoles();
   const size = sizeSelect.value;
+  const cargoMin =
+    cargoSelect?.value && cargoSelect.value !== "any"
+      ? Number(cargoSelect.value)
+      : 0;
   const domain = domainSelect.value;
   const catalog = catalogSelect.value;
   const acquire = acquireSelect.value;
@@ -362,6 +367,9 @@ function filterShips() {
     .filter((ship) => (hangarIds ? true : inDomain(ship, domain)))
     .filter((ship) =>
       hangarIds || size === "any" ? true : ship.size === size
+    )
+    .filter((ship) =>
+      hangarIds || !cargoMin ? true : (ship.cargoScu || 0) >= cargoMin
     )
     .filter((ship) => ship.matchAcquire != null)
     .filter((ship) => (byName || hangarIds || !roles.length ? true : ship.score > 0));
@@ -751,6 +759,7 @@ function applyI18n() {
   setText('label[for="catalog"]', "catLabel");
   setText('label[for="domain"]', "domLabel");
   setText('label[for="size"]', "sizeLabel");
+  setText('label[for="cargo"]', "cargoLabel");
   setText('label[for="acquire"]', "acqLabel");
   setText('label[for="sort"]', "sortLabel");
 
@@ -767,6 +776,10 @@ function applyI18n() {
   setText('#size option[value="large"]', "sizeLarge");
   setText('#size option[value="capital"]', "sizeCapital");
   setText('#size option[value="ground"]', "sizeGround");
+  setText('#cargo option[value="any"]', "cargoAny");
+  document.querySelectorAll("#cargo option[data-scu]").forEach((opt) => {
+    opt.textContent = t("cargoMin", { n: opt.dataset.scu });
+  });
   setText('#acquire option[value="buy"]', "acqBuy");
   setText('#acquire option[value="rent"]', "acqRent");
   setText('#acquire option[value="both"]', "acqBoth");
@@ -970,6 +983,20 @@ async function init() {
     document.querySelector(".results-wrap")?.scrollIntoView({
       behavior: "smooth",
       block: "start",
+    });
+  });
+
+  [
+    systemSelect,
+    catalogSelect,
+    domainSelect,
+    sizeSelect,
+    cargoSelect,
+    acquireSelect,
+    sortSelect,
+  ].forEach((el) => {
+    el?.addEventListener("change", () => {
+      if (hasSearched) render();
     });
   });
 }
