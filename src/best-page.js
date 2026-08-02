@@ -12,6 +12,7 @@ import {
   catText,
 } from "./categories.js";
 import { mountAds } from "./ads.js";
+import { initTeaserCompact } from "./teaser-compact.js";
 
 const pageRole = document.body.dataset.role || "";
 const pageSlug = document.body.dataset.slug || "";
@@ -253,6 +254,7 @@ async function init() {
     document.title = `${t("bestHubTitle")} — Hangar Match`;
     renderHub();
     mountAds();
+    initTeaserCompact();
     return;
   }
 
@@ -263,6 +265,7 @@ async function init() {
   renderCategory(ships);
   renderAlso();
   mountAds();
+  initTeaserCompact();
 }
 
 init();

@@ -11,6 +11,7 @@ import {
 } from "./i18n.js";
 import { mountAds } from "./ads.js";
 import { getHangarIds } from "./hangar-store.js";
+import { initTeaserCompact } from "./teaser-compact.js";
 
 export { t, getLang, localeOf };
 
@@ -135,6 +136,7 @@ export function initToolsShell({ active, onLangChange, titleKey, ledeKey }) {
   }
 
   mountAds();
+  initTeaserCompact();
 }
 
 export async function loadShips() {

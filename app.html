@@ -127,6 +127,7 @@
     <script type="module">
       import { LANG_CHOICES, initLang, getLang, setLang, t } from "/src/i18n.js";
       import { mountAds } from "/src/ads.js";
+      import { initTeaserCompact } from "/src/teaser-compact.js";
 
       initLang();
       const sel = document.querySelector("#lang");
@@ -183,6 +184,7 @@
       if (foot) foot.innerHTML = t("footer");
       document.title = `${t("appPageTitle")} — ${t("appTeaserStamp")}`;
       mountAds();
+      initTeaserCompact();
     </script>
   </body>
 </html>

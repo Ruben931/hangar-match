@@ -8,6 +8,7 @@ import {
 } from "./i18n.js";
 import { detectAdBlock, mountGate, hideGate } from "./adgate.js";
 import { mountAds } from "./ads.js";
+import { initTeaserCompact } from "./teaser-compact.js";
 import {
   suggestPlaces,
   resolvePlace,
@@ -875,6 +876,7 @@ async function init() {
   hasSearched = true;
   render();
   mountAds();
+  initTeaserCompact();
 
   budgetInput.addEventListener("input", () => syncBudget(false));
   budgetRange.addEventListener("input", () => syncBudget(true));
