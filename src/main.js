@@ -12,6 +12,7 @@ import {
   resolvePlace,
   findPlaceById,
   shipDistanceToPlace,
+  distanceLocToPlace,
 } from "./places.js";
 
 const SIZE_LABELS = {
@@ -203,6 +204,47 @@ function rentLocationsIn(ship, system) {
   return locs.filter((l) => locationSystem(l) === system);
 }
 
+/** lieux utilisés pour le tri proximité selon achat / location */
+function locsForPlaceDistance(ship, system, acquire, mode) {
+  const buyLocs = buyLocationsIn(ship, system);
+  const rentLocs = rentLocationsIn(ship, system);
+  if (acquire === "buy" || mode === "buy") return buyLocs;
+  if (acquire === "rent" || mode === "rent") return rentLocs;
+  return [...buyLocs, ...rentLocs];
+}
+
+/** offre d'achat la plus proche du lieu (puis la moins chère) */
+function nearestBuyOffer(ship, system, place) {
+  const offers = buyOffersIn(ship, system);
+  if (!offers.length) return null;
+  if (!place) return offers[0];
+  let best = null;
+  let bestD = 99;
+  let bestPrice = Number.POSITIVE_INFINITY;
+  for (const o of offers) {
+    const d = distanceLocToPlace(o.location, place);
+    if (d < bestD || (d === bestD && o.price < bestPrice)) {
+      best = o;
+      bestD = d;
+      bestPrice = o.price;
+    }
+  }
+  return best;
+}
+
+/** offres triées : d'abord près du lieu choisi, puis prix */
+function buyOffersNearPlace(ship, system, place) {
+  const offers = [...buyOffersIn(ship, system)];
+  if (!place) return offers;
+  return offers.sort((a, b) => {
+    const dd =
+      distanceLocToPlace(a.location, place) -
+      distanceLocToPlace(b.location, place);
+    if (dd !== 0) return dd;
+    return a.price - b.price;
+  });
+}
+
 /** achetable en aUEC chez un revendeur du système choisi */
 function canBuyIn(ship, system) {
   if (!canBuy(ship)) return false;
@@ -270,13 +312,12 @@ function filterShips() {
   let list = ships
     .map((ship) => {
       const mode = matchMode(ship, budget, acquire, catalog, system, byName);
-      const buyLocs = buyLocationsIn(ship, system);
-      const rentLocs = rentLocationsIn(ship, system);
+      const distLocs = locsForPlaceDistance(ship, system, acquire, mode);
       return {
         ...ship,
         score: matchScore(ship, roles),
         matchAcquire: mode,
-        distance: shipDistanceToPlace(ship, place, buyLocs, rentLocs),
+        distance: shipDistanceToPlace(ship, place, distLocs, []),
       };
     })
     .filter((ship) => matchesQuery(ship, q))
@@ -306,8 +347,13 @@ function filterShips() {
       const d = rank(a) - rank(b);
       if (d !== 0) return d;
     }
+    // Avec une position : prix chez le revendeur le plus proche (pas le moins cher global)
     const priceOf = (s) => {
       if (s.matchAcquire === "rent") return s.rentDay;
+      if (place) {
+        const near = nearestBuyOffer(s, system, place);
+        if (near) return near.price;
+      }
       const best = bestBuyPrice(s, system);
       if (typeof best === "number") return best;
       if (typeof s.priceAuec === "number") return s.priceAuec;
@@ -394,13 +440,20 @@ function renderShipCard(ship, index) {
   const budget = Number(budgetInput.value) || 0;
   const system = systemSelect.value;
   const viaRent = ship.matchAcquire === "rent";
-  const offers = buyOffersIn(ship, system);
-  const shipBestPrice = offers.length
-    ? offers[0].price
+  const place = selectedPlace;
+  // Avec une position : on met en avant le revendeur le plus proche, pas le moins cher global
+  const offers = place
+    ? buyOffersNearPlace(ship, system, place)
+    : buyOffersIn(ship, system);
+  const focusOffer = offers[0] || null;
+  const shipBestPrice = focusOffer
+    ? focusOffer.price
     : bestBuyPrice(ship, system);
   const multiShop = !viaRent && offers.length > 1;
   const priceSpread =
     multiShop && offers.some((o) => o.price !== offers[0].price);
+  const onSite =
+    place && focusOffer && distanceLocToPlace(focusOffer.location, place) === 0;
 
   let priceLabel;
   let priceSub;
@@ -417,8 +470,9 @@ function renderShipCard(ship, index) {
     priceSub = t("noDealerHere");
   } else {
     priceLabel = formatAuec(shipBestPrice);
-    if (offers.length === 1) {
-      priceSub = shortShop(offers[0].location);
+    if (offers.length === 1 || (place && focusOffer)) {
+      priceSub = shortShop(focusOffer.location);
+      if (place && !onSite && multiShop) priceFrom = t("from");
     } else if (multiShop) {
       priceFrom = t("from");
       priceSub = priceSpread
@@ -435,9 +489,9 @@ function renderShipCard(ship, index) {
     }
   }
 
-  // offres : la 1ʳᵉ = moins chère, clairement marquée
+  // offres : près du lieu d'abord (sinon la moins chère)
   const buy = offers.length
-    ? (multiShop ? t("best") : "") +
+    ? (!place && multiShop ? t("best") : "") +
       offers
         .slice(0, 2)
         .map((o) => `${o.location} — ${formatAuec(o.price)}`)
@@ -456,8 +510,14 @@ function renderShipCard(ship, index) {
       : t("notSoldAuec");
 
   const rentLocs = rentLocationsIn(ship, system);
+  const rentFocus = place
+    ? [...rentLocs].sort(
+        (a, b) =>
+          distanceLocToPlace(a, place) - distanceLocToPlace(b, place)
+      )[0]
+    : rentLocs[0];
   const rent = canRentIn(ship, system)
-    ? `${formatAuec(ship.rentDay)}${t("perDay")}${rentLocs.length ? " · " + rentLocs[0] : ""}`
+    ? `${formatAuec(ship.rentDay)}${t("perDay")}${rentFocus ? " · " + rentFocus : ""}`
     : canRent(ship) && system !== "all"
       ? t("noRenterIn", { s: SYSTEM_LABELS[system] })
       : t("rentNotListed");
@@ -466,7 +526,7 @@ function renderShipCard(ship, index) {
     isGround(ship)
       ? `<span class="tag mode ground">${t("tagGround")}</span>`
       : `<span class="tag mode air">${t("tagAir")}</span>`,
-    selectedPlace && typeof ship.distance === "number" && ship.distance < 9
+    place && typeof ship.distance === "number" && ship.distance < 9
       ? `<span class="tag mode near d${ship.distance}">${distanceLabel(ship.distance)}</span>`
       : "",
     canBuyIn(ship, system) && shipBestPrice != null && shipBestPrice <= budget

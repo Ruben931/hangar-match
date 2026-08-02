@@ -1,25 +1,21 @@
 /**
- * Lieux SC connus (achat / location) pour l'autocomplete
+ * Tous les hubs / villes SC où un joueur peut se trouver
+ * (landing zones + stations majeures), pour l'autocomplete
  * et le tri par proximité.
  *
- * `typeAs` = ce que le joueur peut taper (ville, planète, station…)
+ * `typeAs` = ce que le joueur peut taper
  * `match`  = regex pour reconnaître les lieux dans les fiches vaisseau
  */
 
 export const PLACES = [
+  // —— Stanton : landing zones ——
   {
     id: "lorville",
     label: "Lorville",
     subtitle: "Hurston · Stanton",
     system: "stanton",
     body: "hurston",
-    typeAs: [
-      "lorville",
-      "hurston",
-      "teasa",
-      "teasa spaceport",
-      "vantage",
-    ],
+    typeAs: ["lorville", "hurston", "teasa", "teasa spaceport", "vantage"],
     match: [/lorville/i, /teasa/i, /vantage rentals/i, /new deal/i],
   },
   {
@@ -29,7 +25,7 @@ export const PLACES = [
     system: "stanton",
     body: "arccorp",
     typeAs: ["area18", "area 18", "arccorp", "arc corp"],
-    match: [/area\s*18/i, /astro armada/i, /traveler rentals/i, /arccorp/i],
+    match: [/area\s*18/i, /astro armada/i, /traveler rentals/i],
   },
   {
     id: "orison",
@@ -47,8 +43,86 @@ export const PLACES = [
     system: "stanton",
     body: "microtech",
     typeAs: ["new babbage", "newbabbage", "babbage", "microtech", "micro tech"],
-    match: [/new babbage/i, /regal luxury/i, /microtech/i],
+    match: [/new babbage/i, /regal luxury/i],
   },
+  {
+    id: "grimhex",
+    label: "Grim HEX",
+    subtitle: "Yela · Crusader · Stanton",
+    system: "stanton",
+    body: "crusader",
+    typeAs: ["grim hex", "grimhex", "grim", "yela"],
+    match: [/grim\s*hex/i],
+  },
+
+  // —— Stanton : stations orbitales majeures ——
+  {
+    id: "everus",
+    label: "Everus Harbor",
+    subtitle: "Hurston orbit · Stanton",
+    system: "stanton",
+    body: "hurston",
+    typeAs: ["everus harbor", "everus", "harbor"],
+    match: [/everus/i],
+  },
+  {
+    id: "baijini",
+    label: "Baijini Point",
+    subtitle: "ArcCorp orbit · Stanton",
+    system: "stanton",
+    body: "arccorp",
+    typeAs: ["baijini point", "baijini"],
+    match: [/baijini/i],
+  },
+  {
+    id: "seraphim",
+    label: "Seraphim Station",
+    subtitle: "Crusader orbit · Stanton",
+    system: "stanton",
+    body: "crusader",
+    typeAs: ["seraphim station", "seraphim"],
+    match: [/seraphim/i],
+  },
+  {
+    id: "tressler",
+    label: "Port Tressler",
+    subtitle: "microTech orbit · Stanton",
+    system: "stanton",
+    body: "microtech",
+    typeAs: ["port tressler", "tressler"],
+    match: [/tressler/i],
+  },
+
+  // —— Pyro : hubs ——
+  {
+    id: "checkmate",
+    label: "Checkmate",
+    subtitle: "Monox · Pyro",
+    system: "pyro",
+    body: "monox",
+    typeAs: ["checkmate", "checkmate station", "monox", "pyro"],
+    match: [/checkmate/i, /buy\s*&\s*fly/i, /\bpyro\b/i],
+  },
+  {
+    id: "orbituary",
+    label: "Orbituary",
+    subtitle: "Bloom · Pyro",
+    system: "pyro",
+    body: "bloom",
+    typeAs: ["orbituary", "bloom", "pyro"],
+    match: [/orbituary/i, /buy\s*&\s*fly/i, /\bpyro\b/i],
+  },
+  {
+    id: "ruin",
+    label: "Ruin Station",
+    subtitle: "Terminus · Pyro",
+    system: "pyro",
+    body: "terminus",
+    typeAs: ["ruin station", "ruin", "terminus", "pyro"],
+    match: [/ruin/i, /buy\s*&\s*fly/i, /\bpyro\b/i],
+  },
+
+  // —— Nyx ——
   {
     id: "levski",
     label: "Levski",
@@ -58,35 +132,23 @@ export const PLACES = [
     typeAs: ["levski", "delamar", "nyx"],
     match: [/levski/i, /delamar/i, /teach'?s/i],
   },
-  {
-    id: "pyro",
-    label: "Pyro",
-    subtitle: "Checkmate · Orbituary · Ruin",
-    system: "pyro",
-    body: "pyro",
-    typeAs: [
-      "pyro",
-      "checkmate",
-      "orbituary",
-      "ruin",
-      "ruin station",
-    ],
-    match: [/pyro/i, /checkmate/i, /orbituary/i, /ruin/i, /buy\s*&\s*fly/i],
-  },
+
+  // —— Loueurs génériques (refinery / partners) ——
   {
     id: "stations",
-    label: "Stations orbitales",
-    subtitle: "Refinery / partners · Stanton+",
+    label: "Stations / Refinery",
+    subtitle: "Rental partners · Stanton+",
     system: "stanton",
     body: "orbit",
     typeAs: [
       "stations",
       "station",
-      "orbitale",
-      "orbitales",
-      "stations orbitales",
       "refinery",
       "refinery deck",
+      "rental partners",
+      "stations orbitales",
+      "orbitale",
+      "orbitales",
     ],
     match: [/refinery deck/i, /stations?\s*\/\s*rental/i, /rental partners/i],
   },
@@ -119,13 +181,9 @@ function placeSearchKeys(place) {
 
 /**
  * Suggestions à chaque lettre tapée.
- * L → Lorville + Levski
- * Lo / Lor / Lorv… → Lorville
- * H → Hurston → Lorville
- * A → Area18
- * Or → Orison
+ * Champ vide → toute la liste des villes / hubs.
  */
-export function suggestPlaces(query, limit = 8) {
+export function suggestPlaces(query, limit = 20) {
   const q = normalizePlaceQuery(query);
   if (!q) return PLACES.slice(0, limit);
 
