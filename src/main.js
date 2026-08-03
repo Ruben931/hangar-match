@@ -6,7 +6,7 @@ import {
   localeOf,
   t,
 } from "./i18n.js";
-import { detectAdBlock, mountGate, hideGate } from "./adgate.js";
+import { watchAdGate } from "./adgate.js";
 import { mountAds } from "./ads.js";
 import { initTeaserCompact } from "./teaser-compact.js";
 import {
@@ -826,28 +826,6 @@ function applyI18n() {
   }
 }
 
-// Remettre à true une fois le site approuvé par AdSense : tant que Google
-// examine le site, un mur bloquant l'empêcherait de voir le contenu.
-const GATE_ENABLED = false;
-
-async function enforceAdGate() {
-  if (!GATE_ENABLED) return false;
-  const blocked = await detectAdBlock();
-  if (!blocked) {
-    hideGate();
-    return false;
-  }
-  mountGate({
-    title: t("gateTitle"),
-    body: t("gateBody"),
-    retry: t("gateRetry"),
-    onRetry: () => {
-      enforceAdGate();
-    },
-  });
-  return true;
-}
-
 function setupLangSelect() {
   langSelect.innerHTML = LANG_CHOICES.map(
     (l) => `<option value="${l.code}">${l.label}</option>`
@@ -867,10 +845,7 @@ async function init() {
   renderRoles();
   applyI18n();
 
-  await enforceAdGate();
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") enforceAdGate();
-  });
+  watchAdGate();
 
   const res = await fetch("/data/ships.json");
   ships = await res.json();

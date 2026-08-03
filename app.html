@@ -127,6 +127,7 @@
     <script type="module">
       import { LANG_CHOICES, initLang, getLang, setLang, t } from "/src/i18n.js";
       import { mountAds } from "/src/ads.js";
+      import { watchAdGate } from "/src/adgate.js";
       import { initTeaserCompact } from "/src/teaser-compact.js";
 
       initLang();
@@ -185,6 +186,7 @@
       document.title = `${t("appPageTitle")} — ${t("appTeaserStamp")}`;
       mountAds();
       initTeaserCompact();
+      watchAdGate();
     </script>
   </body>
 </html>

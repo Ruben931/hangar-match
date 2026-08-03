@@ -12,6 +12,7 @@ import {
   catText,
 } from "./categories.js";
 import { mountAds } from "./ads.js";
+import { watchAdGate } from "./adgate.js";
 import { initTeaserCompact } from "./teaser-compact.js";
 
 const pageRole = document.body.dataset.role || "";
@@ -255,6 +256,7 @@ async function init() {
     renderHub();
     mountAds();
     initTeaserCompact();
+    watchAdGate();
     return;
   }
 
@@ -266,6 +268,7 @@ async function init() {
   renderAlso();
   mountAds();
   initTeaserCompact();
+  watchAdGate();
 }
 
 init();

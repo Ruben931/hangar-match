@@ -10,6 +10,7 @@ import {
   t,
 } from "./i18n.js";
 import { mountAds } from "./ads.js";
+import { watchAdGate } from "./adgate.js";
 import { getHangarIds } from "./hangar-store.js";
 import { initTeaserCompact } from "./teaser-compact.js";
 
@@ -118,6 +119,13 @@ export function applyToolsChrome(active) {
 
   const langLabel = document.querySelector('label[for="lang"]');
   if (langLabel) langLabel.textContent = t("langLabel");
+
+  const gate = document.querySelector("#access-gate:not([hidden])");
+  if (gate) {
+    gate.querySelector(".access-gate-title").textContent = t("gateTitle");
+    gate.querySelector(".access-gate-body").textContent = t("gateBody");
+    gate.querySelector(".access-gate-btn").textContent = t("gateRetry");
+  }
 }
 
 export function initToolsShell({ active, onLangChange, titleKey, ledeKey }) {
@@ -137,6 +145,7 @@ export function initToolsShell({ active, onLangChange, titleKey, ledeKey }) {
 
   mountAds();
   initTeaserCompact();
+  watchAdGate();
 }
 
 export async function loadShips() {

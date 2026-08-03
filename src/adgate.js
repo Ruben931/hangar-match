@@ -1,7 +1,9 @@
 /**
  * Détection de bloqueur de pubs + écran d'accès.
- * Bait avec des noms que EasyList / uBlock masquent habituellement.
+ * Bait EasyList / uBlock + requête vers le CDN AdSense.
  */
+
+import { t } from "./i18n.js";
 
 export function detectAdBlock() {
   // ne pas bloquer les robots Google (AdSense / Search)
@@ -11,8 +13,7 @@ export function detectAdBlock() {
   }
 
   return new Promise((resolve) => {
-    // pas de classe/élément AdSense ici : un faux <ins class="adsbygoogle">
-    // serait vu comme une unité publicitaire invalide par Google.
+    // pas de faux <ins class="adsbygoogle"> : Google le verrait comme une unité invalide
     const bait = document.createElement("div");
     bait.id = "ad-banner";
     bait.className =
@@ -30,21 +31,39 @@ export function detectAdBlock() {
     });
     document.body.appendChild(bait);
 
-    // laisser le temps aux filtres cosmétiques d'agir
+    let networkBlocked = false;
+    const netProbe = fetch(
+      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+      { method: "HEAD", mode: "no-cors", cache: "no-store" }
+    )
+      .then(() => {
+        /* opaque ok = réseau pas coupé */
+      })
+      .catch(() => {
+        networkBlocked = true;
+      });
+
+    const finish = () => {
+      const cs = getComputedStyle(bait);
+      const baitBlocked =
+        !document.body.contains(bait) ||
+        bait.offsetHeight === 0 ||
+        bait.clientHeight === 0 ||
+        cs.display === "none" ||
+        cs.visibility === "hidden" ||
+        cs.opacity === "0" ||
+        cs.height === "0px" ||
+        cs.maxHeight === "0px";
+      bait.remove();
+      resolve(baitBlocked || networkBlocked);
+    };
+
     requestAnimationFrame(() => {
       setTimeout(() => {
-        const cs = getComputedStyle(bait);
-        const blocked =
-          !document.body.contains(bait) ||
-          bait.offsetHeight === 0 ||
-          bait.clientHeight === 0 ||
-          cs.display === "none" ||
-          cs.visibility === "hidden" ||
-          cs.opacity === "0" ||
-          cs.height === "0px" ||
-          cs.maxHeight === "0px";
-        bait.remove();
-        resolve(blocked);
+        Promise.race([
+          netProbe,
+          new Promise((r) => setTimeout(r, 400)),
+        ]).then(finish);
       }, 120);
     });
   });
@@ -82,4 +101,30 @@ export function hideGate() {
   const el = document.querySelector("#access-gate");
   if (el) el.hidden = true;
   document.documentElement.classList.remove("gate-locked");
+}
+
+/** Active le mur si un bloqueur est détecté. */
+export async function enforceAdGate() {
+  const blocked = await detectAdBlock();
+  if (!blocked) {
+    hideGate();
+    return false;
+  }
+  mountGate({
+    title: t("gateTitle"),
+    body: t("gateBody"),
+    retry: t("gateRetry"),
+    onRetry: () => {
+      enforceAdGate();
+    },
+  });
+  return true;
+}
+
+/** À appeler depuis init + visibilitychange */
+export function watchAdGate() {
+  enforceAdGate();
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") enforceAdGate();
+  });
 }
